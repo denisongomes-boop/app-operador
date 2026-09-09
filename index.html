@@ -575,6 +575,16 @@
     const SUPABASE_URL = 'https://foctlpygsbrxrrrphkah.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInRefiI6ImZvY3RscHlnc2JyeHJycnBoa2FoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzMDI2OTAsImV4cCI6MjEwMzg3ODY5MH0.XOdcn0vyysYXGJqijQ80JijkY2U4t4nL5tBsDXDeOZc';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // ==========================================
+    // ADICIONE ESTE BLOCO PARA SINCRONIZAÇÃO EM TEMPO REAL
+    _supabase
+      .channel('public:banco_dados')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'banco_dados' }, payload => {
+        console.log('Alteração detectada!', payload);
+        carregarMapaApp(); // Atualiza o mapa automaticamente
+      })
+      .subscribe();
+    // ==========================================
 
     let atuadorSelecionadoModal = null;
     let historicoDataGlobal = [];
