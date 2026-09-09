@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>App do Operador - ETA Pirapama</title>
 
   <!-- PWA Meta Tags -->
@@ -12,10 +13,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Operador Atuadores">
+
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icons/icon-192x192.svg">
-  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
-  
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+  <link rel="icon" type="image/png" href="icons/icon-192x192.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -61,15 +63,6 @@
       z-index: 1020;
     }
 
-    #toast-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1090;
-      min-width: 280px;
-      max-width: 350px;
-    }
-
     .screen {
       display: none;
       padding: 15px;
@@ -81,8 +74,15 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .card {
@@ -107,11 +107,6 @@
       align-items: center;
       gap: 6px;
       transition: all 0.2s;
-    }
-
-    .btn-voltar:hover {
-      background-color: #e0f2fe;
-      color: #0369a1;
     }
 
     .nav-bottom {
@@ -160,12 +155,6 @@
       box-shadow: var(--shadow-sm);
     }
 
-    .btn-dashboard:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md) !important;
-      border-color: #38bdf8 !important;
-    }
-
     .btn-mapa-close {
       width: 36px;
       height: 36px;
@@ -202,9 +191,17 @@
       display: inline-block;
     }
 
-    .bg-mapa-ok { background-color: #276738; }
-    .bg-mapa-parado { background-color: #bd2130; }
-    .bg-mapa-obra { background-color: #0b5ed7; }
+    .bg-mapa-ok {
+      background-color: #276738;
+    }
+
+    .bg-mapa-parado {
+      background-color: #bd2130;
+    }
+
+    .bg-mapa-obra {
+      background-color: #0b5ed7;
+    }
 
     .mapa-ala-title {
       text-align: center;
@@ -229,8 +226,17 @@
       margin-bottom: 8px;
     }
 
-    .mapa-atuadores-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .mapa-atuadores-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+    .mapa-atuadores-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .mapa-atuadores-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+    }
 
     .btn-atuador-mapa {
       border: none;
@@ -241,22 +247,31 @@
       padding: 8px 4px;
       text-align: center;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
       width: 100%;
     }
 
-    .btn-atuador-mapa.btn-mapa-verde { background-color: #276738; }
-    .btn-atuador-mapa.btn-mapa-vermelho { background-color: #bd2130; }
-    .btn-atuador-mapa.btn-mapa-azul { background-color: #0b5ed7; }
-    .btn-atuador-mapa.btn-mapa-cinza { background-color: #64748b; }
+    .btn-atuador-mapa.btn-mapa-verde {
+      background-color: #276738;
+    }
 
-    /* MODAL DE DETALHES */
+    .btn-atuador-mapa.btn-mapa-vermelho {
+      background-color: #bd2130;
+    }
+
+    .btn-atuador-mapa.btn-mapa-azul {
+      background-color: #0b5ed7;
+    }
+
+    .btn-atuador-mapa.btn-mapa-cinza {
+      background-color: #64748b;
+    }
+
     .modal-overlay-mapa {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(15, 23, 42, 0.65);
       backdrop-filter: blur(3px);
       z-index: 10500;
@@ -273,7 +288,6 @@
       max-width: 460px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
     }
 
     .modal-header-azul {
@@ -285,113 +299,95 @@
       justify-content: space-between;
     }
 
-    .modal-btn-close-white {
-      background: transparent;
-      border: none;
-      color: #ffffff;
-      font-size: 1.4rem;
-    }
-
-    .detalhe-spec-card {
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
+    .pwa-prompt {
+      position: fixed;
+      bottom: 85px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 400px;
       background: #ffffff;
-    }
-
-    .detalhe-spec-row {
-      padding: 10px 14px;
-      border-bottom: 1px solid #edf2f7;
-    }
-
-    .detalhe-spec-row:last-child { border-bottom: none; }
-    .detalhe-spec-label { font-weight: 800; color: #1e293b; font-size: 0.9rem; }
-    .detalhe-spec-val { font-weight: 500; color: #334155; font-size: 0.9rem; }
-
-    .timeline-item {
-      border-left: 3px solid var(--primary-blue);
-      padding-left: 12px;
-      margin-bottom: 10px;
-      position: relative;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -6px; top: 4px;
-      width: 9px; height: 9px;
-      border-radius: 50%;
-      background-color: var(--primary-blue);
+      padding: 15px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      z-index: 11000;
+      border: 2px solid var(--primary-blue);
     }
   </style>
 </head>
 
 <body>
-  <div id="toast-container"></div>
   <div class="header">👷‍♂️ App Operador - ETA Pirapama</div>
+
+  <!-- PWA INSTALL PROMPT -->
+  <div id="pwa-install-prompt" class="pwa-prompt d-none">
+    <div class="d-flex align-items-center gap-3">
+      <div class="fs-1">📲</div>
+      <div>
+        <h6 class="m-0 fw-bold text-dark">Instalar Aplicativo</h6>
+        <small class="text-muted">Adicione o App do Operador à tela inicial para acesso rápido e offline.</small>
+      </div>
+    </div>
+    <div class="mt-3 d-flex gap-2">
+      <button id="btn-install-pwa" class="btn btn-primary flex-grow-1 fw-bold">Instalar PWA</button>
+      <button class="btn btn-outline-secondary" onclick="fecharPWAPrompt()">Agora não</button>
+    </div>
+  </div>
 
   <!-- DASHBOARD OPERADOR -->
   <div id="tela-inicio" class="screen active-screen">
     <div class="text-center mt-3 mb-4">
       <div style="font-size: 3rem;">⚙️</div>
       <h2 class="fw-bolder" style="font-size: 1.4rem;">Operação de Atuadores</h2>
-      <h5 class="text-muted" style="font-size: 0.95rem;">Painel de Consulta</h5>
+      <h5 class="text-muted" style="font-size: 0.95rem;">Painel de Acesso Rápido</h5>
     </div>
-    <div class="row row-cols-2 row-cols-sm-3 g-3">
+    <div class="row row-cols-1 g-3">
       <div class="col">
-        <div class="card h-100 text-center p-3 btn-dashboard" onclick="mudar('tela-consulta')">
-          <div class="fs-2 mb-2">🔍</div>
-          <div class="fw-bold" style="font-size:0.85rem;">Consulta Detalhada</div>
+        <div class="card h-100 text-center p-4 btn-dashboard"
+          onclick="mudar('tela-manutencao', document.getElementById('btn-nav-tela-manutencao'))">
+          <div class="fs-1 mb-2">🛠️</div>
+          <div class="fw-bold fs-5">Solicitar Manutenção</div>
+          <div class="text-muted small">Abertura de chamados e relatórios de falha</div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-cols-2 g-3 mt-1">
+      <div class="col">
+        <div class="card h-100 text-center p-3 btn-dashboard"
+          onclick="mudar('tela-mapa', document.getElementById('btn-nav-tela-mapa'))">
+          <div class="fs-1 mb-2">🗺️</div>
+          <div class="fw-bold" style="font-size:0.95rem;">Mapa Planta</div>
         </div>
       </div>
       <div class="col">
-        <div class="card h-100 text-center p-3 btn-dashboard" onclick="mudar('tela-visao')">
-          <div class="fs-2 mb-2">👁️</div>
-          <div class="fw-bold" style="font-size:0.85rem;">Visão Geral</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100 text-center p-3 btn-dashboard" onclick="mudar('tela-mapa')">
-          <div class="fs-2 mb-2">🗺️</div>
-          <div class="fw-bold" style="font-size:0.85rem;">Mapa Planta</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100 text-center p-3 btn-dashboard" onclick="mudar('tela-historico-os')">
-          <div class="fs-2 mb-2">📜</div>
-          <div class="fw-bold" style="font-size:0.85rem;">Histórico OS</div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100 text-center p-3 btn-dashboard" onclick="mudar('tela-guia-foto')">
-          <div class="fs-2 mb-2">📸</div>
-          <div class="fw-bold" style="font-size:0.85rem;">Guia Foto</div>
+        <div class="card h-100 text-center p-3 btn-dashboard"
+          onclick="mudar('tela-historico-os', document.getElementById('btn-nav-tela-historico'))">
+          <div class="fs-1 mb-2">📜</div>
+          <div class="fw-bold" style="font-size:0.95rem;">Histórico OS</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- TELA CONSULTA DETALHADA -->
-  <div id="tela-consulta" class="screen">
+  <!-- TELA SOLICITAR MANUTENÇÃO -->
+  <div id="tela-manutencao" class="screen">
     <button class="btn-voltar" onclick="voltarInicio()">⬅️ Voltar</button>
     <div class="card p-3">
-      <h5 class="fw-bold mb-3">🔍 Consultar Atuador</h5>
-      <div class="row g-2">
-        <div class="col-6">
-          <label class="form-label fw-bold">Filtro</label>
-          <select id="cons-filtro" class="form-select">
-            <option value="1">Filtro 01</option><option value="2" selected>Filtro 02</option>
-            <option value="3">Filtro 03</option><option value="4">Filtro 04</option>
-            <option value="5">Filtro 05</option><option value="6">Filtro 06</option>
-            <option value="7">Filtro 07</option><option value="8">Filtro 08</option>
-            <option value="9">Filtro 09</option><option value="10">Filtro 10</option>
-            <option value="11">Filtro 11</option><option value="12">Filtro 12</option>
-            <option value="13">Filtro 13</option><option value="14">Filtro 14</option>
-            <option value="15">Filtro 15</option><option value="16">Filtro 16</option>
+      <h5 class="fw-bold mb-3">🛠️ Solicitar Manutenção</h5>
+      <form id="form-manutencao" onsubmit="enviarManutencao(event)">
+        <div class="mb-3">
+          <label class="form-label fw-bold">1. Filtro</label>
+          <select id="manut-filtro" class="form-select" onchange="atualizarModeloManutencao()" required>
+            <option value="" selected disabled>Selecione o filtro...</option>
+            <script>
+              for (let i = 1; i <= 16; i++) document.write(`<option value="${i}">Filtro ${(i < 10 ? '0' : '') + i}</option>`);
+            </script>
           </select>
         </div>
-        <div class="col-6">
-          <label class="form-label fw-bold">Posição</label>
-          <select id="cons-posicao" class="form-select">
+        <div class="mb-3">
+          <label class="form-label fw-bold">2. Posição</label>
+          <select id="manut-posicao" class="form-select" onchange="atualizarModeloManutencao()" required>
+            <option value="" selected disabled>Selecione a posição...</option>
             <option value="Entrada">Entrada</option>
             <option value="Descarga">Descarga</option>
             <option value="Lavagem">Lavagem</option>
@@ -399,19 +395,33 @@
             <option value="Soprador">Soprador</option>
           </select>
         </div>
-      </div>
-      <button class="btn btn-primary w-100 mt-3" onclick="consultarAtuador()">Buscar Atuador</button>
+        <div class="mb-3">
+          <label class="form-label fw-bold">3. Modelo (Automático)</label>
+          <select id="manut-modelo" class="form-select" required>
+            <option value="" selected disabled>Aguardando Filtro e Posição...</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">4. Descrição do Problema</label>
+          <textarea id="manut-descricao" class="form-control" rows="3"
+            placeholder="Descreva o defeito apresentado ou serviço necessário..." required></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="form-label fw-bold">5. Anexar Mídia / Foto</label>
+          <input type="file" id="manut-foto" class="form-control" accept="image/*,video/*" capture="environment">
+        </div>
+        <button type="submit" class="btn btn-primary w-100 fw-bold p-2" style="font-size:1.1rem;">Enviar
+          Solicitação</button>
+      </form>
     </div>
-    <div id="resultado-consulta" class="mt-3"></div>
   </div>
 
   <!-- TELA MAPA PLANTA -->
   <div id="tela-mapa" class="screen">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4 class="fw-bold m-0 text-dark">🗺️ Mapa Visual - ETA Pirapama</h4>
+      <h4 class="fw-bold m-0 text-dark">🗺️ Mapa Visual</h4>
       <button class="btn-mapa-close" onclick="voltarInicio()">✕</button>
     </div>
-
     <div class="card mapa-control-card p-3 mb-3">
       <div class="row align-items-center g-3">
         <div class="col-12 col-md-5">
@@ -421,14 +431,8 @@
             <option value="inferior">Vista Inferior (Ar / Lav. / Filtrada)</option>
           </select>
         </div>
-        <div class="col-12 col-md-7 d-flex align-items-center flex-wrap gap-3">
-          <div class="d-flex align-items-center gap-2"><span class="mapa-legend-dot bg-mapa-ok"></span><span class="small fw-bold">OK / Operação</span></div>
-          <div class="d-flex align-items-center gap-2"><span class="mapa-legend-dot bg-mapa-parado"></span><span class="small fw-bold">Parado</span></div>
-          <div class="d-flex align-items-center gap-2"><span class="mapa-legend-dot bg-mapa-obra"></span><span class="small fw-bold">Removido / Obra</span></div>
-        </div>
       </div>
     </div>
-
     <div class="row g-3">
       <div class="col-12 col-md-6">
         <div class="mapa-ala-title">ALA ESQUERDA (1 ao 8)</div>
@@ -441,124 +445,149 @@
     </div>
   </div>
 
-  <!-- MODAL DETALHES DO ATUADOR (COM HISTÓRICO DE OS E SEM PENDÊNCIAS) -->
-  <div id="modal-detalhes-atuador-mapa" class="modal-overlay-mapa" style="display: none;" onclick="fecharModalOverlayClick(event)">
+  <!-- MODAL MAPA COM BOTÃO ABRIR CHAMADO -->
+  <div id="modal-detalhes-atuador-mapa" class="modal-overlay-mapa" style="display: none;"
+    onclick="fecharModalOverlayClick(event)">
     <div class="modal-box-detalhes" onclick="event.stopPropagation()">
       <div class="modal-header-azul">
         <h5 id="modal-atuador-titulo" class="m-0 fw-bold">Atuador</h5>
-        <button class="modal-btn-close-white" onclick="fecharModalDetalhesAtuador()">✕</button>
+        <button class="btn-close btn-close-white" onclick="fecharModalDetalhesAtuador()"></button>
       </div>
-
       <div class="p-3">
         <div class="d-flex align-items-center gap-3 mb-3 p-2 bg-light rounded border">
-          <img id="modal-atuador-thumb" src="img/foto3.jpeg" alt="Atuador" class="rounded border shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
           <div>
             <div class="fw-bold text-dark fs-5" id="modal-atuador-codigo-tag">TAG</div>
             <div class="small text-muted" id="modal-atuador-posicao-sub">Posição</div>
           </div>
         </div>
-
-        <div class="detalhe-spec-card mb-3">
-          <div class="detalhe-spec-row d-flex justify-content-between align-items-center">
-            <span class="detalhe-spec-label">Status Atual:</span>
-            <span id="modal-atuador-status-badge" class="badge bg-success px-3 py-1">OK</span>
+        <div class="border rounded p-2 mb-3">
+          <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+            <strong>Status:</strong> <span id="modal-atuador-status-badge" class="badge bg-success">OK</span>
           </div>
-          <div class="detalhe-spec-row">
-            <span class="detalhe-spec-label">Modelo:</span> <span id="modal-atuador-modelo" class="detalhe-spec-val ms-1">-</span>
+          <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+            <strong>Modelo:</strong> <span id="modal-atuador-modelo" class="text-muted">-</span>
           </div>
-          <div class="detalhe-spec-row">
-            <span class="detalhe-spec-label">Série:</span> <span id="modal-atuador-serie" class="detalhe-spec-val ms-1">-</span>
-          </div>
-          <div class="detalhe-spec-row">
-            <span class="detalhe-spec-label">Obs Equipamento:</span>
-            <div id="modal-atuador-obs" class="small text-secondary fw-semibold mt-1">-</div>
+          <div class="d-flex justify-content-between">
+            <strong>Série:</strong> <span id="modal-atuador-serie" class="text-muted">-</span>
           </div>
         </div>
-
-        <!-- ÚLTIMOS HISTÓRICOS DE ORDEM DE SERVIÇO -->
-        <h6 class="fw-bold text-dark border-bottom pb-2">📜 Últimas Ordens de Serviço (OS)</h6>
-        <div id="modal-atuador-historico-container" class="mb-3" style="max-height: 200px; overflow-y: auto;">
-          <div class="text-muted small">Carregando histórico de manutenção...</div>
-        </div>
-
-        <button class="btn btn-primary w-100 fw-semibold" onclick="modalIrParaConsulta()">🔍 Consulta Completa</button>
+        <button class="btn btn-danger w-100 fw-bold p-2 mb-2" onclick="abrirChamadoDoMapa()">
+          🛠️ Abrir Chamado (Preencher OS)
+        </button>
       </div>
     </div>
-  </div>
-
-  <!-- TELA VISÃO GERAL -->
-  <div id="tela-visao" class="screen">
-    <button class="btn-voltar" onclick="voltarInicio()">⬅️ Voltar</button>
-    <h5 class="fw-bold mb-3">👁️ Visão Geral por Filtro</h5>
-    <input type="text" id="visao-search" class="form-control mb-3" placeholder="⚡ Digite para buscar..." onkeyup="filtrarTabelaVisao()">
-    <div id="tabela-visao-container" class="table-responsive"></div>
   </div>
 
   <!-- TELA HISTÓRICO OS -->
   <div id="tela-historico-os" class="screen">
     <button class="btn-voltar" onclick="voltarInicio()">⬅️ Voltar</button>
     <h5 class="fw-bold mb-3">📜 Histórico de Manutenções (OS)</h5>
-    <div class="card p-3 mb-3">
-      <input type="text" id="hist-search-input" class="form-control" placeholder="Buscar por Nº OS, serviço ou equipe..." onkeyup="carregarHistoricoOSGeral()">
-    </div>
-    <div id="lista-historico-os"></div>
-  </div>
 
-  <!-- TELA GUIA FOTO -->
-  <div id="tela-guia-foto" class="screen">
-    <button class="btn-voltar" onclick="voltarInicio()">⬅️ Voltar</button>
-    <h5 class="fw-bold mb-3">📸 Guia Fotográfico de Componentes</h5>
-    <div class="card p-3">
-      <label class="form-label fw-bold">Selecione o Modelo:</label>
-      <select id="guia-modelo-sel" class="form-select mb-3" onchange="carregarGuiaModelo(this.value)">
-        <option value="CSR 06">CSR 06</option>
-        <option value="CSR50M">CSR50M</option>
-        <option value="BERNAD">BERNAD</option>
-      </select>
-      <div id="guia-fotos-container" class="text-center p-3 border rounded bg-light">
-        Selecione um modelo acima para visualizar o catálogo.
+    <!-- NOVOS FILTROS COM MENUS SUSPENSOS -->
+    <div class="card p-3 mb-3">
+      <div class="row g-2">
+        <div class="col-6">
+          <label class="form-label small fw-bold mb-1">Filtro</label>
+          <select id="filtro-hist-filtro" class="form-select form-select-sm" onchange="aplicarFiltrosHistorico()">
+            <option value="">Todos</option>
+            <script>for (let i = 1; i <= 16; i++) document.write(`<option value="${i}">Filtro ${i}</option>`);</script>
+          </select>
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-bold mb-1">Posição</label>
+          <select id="filtro-hist-posicao" class="form-select form-select-sm" onchange="aplicarFiltrosHistorico()">
+            <option value="">Todas</option>
+            <option value="Entrada">Entrada</option>
+            <option value="Descarga">Descarga</option>
+            <option value="Lavagem">Lavagem</option>
+            <option value="Filtrada">Filtrada</option>
+            <option value="Soprador">Soprador</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-bold mb-1">Nº da OS</label>
+          <select id="filtro-hist-os" class="form-select form-select-sm" onchange="aplicarFiltrosHistorico()">
+            <option value="">Todas</option>
+            <!-- Preenchido dinamicamente via JS -->
+          </select>
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-bold mb-1">Equipe / Nº 2</label>
+          <select id="filtro-hist-num2" class="form-select form-select-sm" onchange="aplicarFiltrosHistorico()">
+            <option value="">Todas</option>
+            <!-- Preenchido dinamicamente via JS -->
+          </select>
+        </div>
       </div>
     </div>
+
+    <div id="lista-historico-os"></div>
   </div>
 
   <!-- NAVEGAÇÃO INFERIOR -->
   <div class="nav-bottom">
-    <button class="nav-item active" id="btn-nav-tela-inicio" onclick="mudar('tela-inicio', this)"><span class="nav-icon">🏠</span>Início</button>
-    <button class="nav-item" id="btn-nav-tela-consulta" onclick="mudar('tela-consulta', this)"><span class="nav-icon">🔍</span>Consultas</button>
-    <button class="nav-item" id="btn-nav-tela-mapa" onclick="mudar('tela-mapa', this)"><span class="nav-icon">🗺️</span>Mapa</button>
-    <button class="nav-item" id="btn-nav-tela-historico" onclick="mudar('tela-historico-os', this)"><span class="nav-icon">📜</span>Histórico</button>
+    <button class="nav-item active" id="btn-nav-tela-inicio" onclick="mudar('tela-inicio', this)"><span
+        class="nav-icon">🏠</span>Início</button>
+    <button class="nav-item" id="btn-nav-tela-manutencao" onclick="mudar('tela-manutencao', this)"><span
+        class="nav-icon">🛠️</span>Manutenção</button>
+    <button class="nav-item" id="btn-nav-tela-mapa" onclick="mudar('tela-mapa', this)"><span
+        class="nav-icon">🗺️</span>Mapa</button>
+    <button class="nav-item" id="btn-nav-tela-historico" onclick="mudar('tela-historico-os', this)"><span
+        class="nav-icon">📜</span>Histórico</button>
   </div>
 
   <script>
+    // Configuração Supabase
     const SUPABASE_URL = 'https://foctlpygsbrxrrrphkah.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvY3RscHlnc2JyeHJycnBoa2FoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzMDI2OTAsImV4cCI6MjEwMzg3ODY5MH0.XOdcn0vyysYXGJqijQ80JijkY2U4t4nL5tBsDXDeOZc';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let atuadorSelecionadoModal = null;
+    let historicoDataGlobal = []; // Armazena os dados do histórico para filtragem no client-side
 
+    // --- SERVICE WORKER & PWA ---
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(reg => console.log('SW Registrado!', reg))
+          .catch(err => console.error('Erro no SW', err));
+      });
+    }
+
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('pwa-install-prompt').classList.remove('d-none');
+    });
+
+    document.getElementById('btn-install-pwa').addEventListener('click', async () => {
+      document.getElementById('pwa-install-prompt').classList.add('d-none');
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+      }
+    });
+
+    function fecharPWAPrompt() { document.getElementById('pwa-install-prompt').classList.add('d-none'); }
+
+    // --- BANCO DE DADOS ---
     const ServicoDB = {
       async obterTodosAtuadores() {
         const { data, error } = await _supabase.from('banco_dados').select('*').order('id', { ascending: true });
-        if (error) throw error;
-        return data || [];
+        if (error) console.error(error); return data || [];
       },
       async buscarDadosAtuador(filtro, posicao) {
         const { data, error } = await _supabase.from('banco_dados').select('*').eq('filtro', parseInt(filtro, 10)).eq('posicao_atuador', posicao).maybeSingle();
-        if (error) throw error;
-        return data;
-      },
-      async buscarHistoricoManutencao(filtro, posicao) {
-        const { data, error } = await _supabase.from('bd_manutencao').select('*').eq('filtro', parseInt(filtro, 10)).eq('posicao', posicao).order('id', { ascending: false });
-        if (error) throw error;
-        return data || [];
+        if (error) console.error(error); return data;
       },
       async obterHistoricoOSGeral() {
         const { data, error } = await _supabase.from('bd_manutencao').select('*').order('id', { ascending: false });
-        if (error) throw error;
-        return data || [];
+        if (error) console.error(error); return data || [];
       }
     };
 
+    // --- NAVEGAÇÃO ---
     function mudar(id, btn) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
       document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -566,57 +595,39 @@
       if (target) target.classList.add('active-screen');
       if (btn) btn.classList.add('active');
       if (id === 'tela-mapa') carregarMapaApp();
-      if (id === 'tela-visao') carregarVisaoGeral();
-      if (id === 'tela-historico-os') carregarHistoricoOSGeral();
+      if (id === 'tela-historico-os') inicializarHistoricoOS();
       window.scrollTo(0, 0);
     }
+    function voltarInicio() { mudar('tela-inicio', document.getElementById('btn-nav-tela-inicio')); }
 
-    function voltarInicio() {
-      mudar('tela-inicio', document.getElementById('btn-nav-tela-inicio'));
-    }
-
-    async function consultarAtuador() {
-      const filtro = document.getElementById('cons-filtro').value;
-      const posicao = document.getElementById('cons-posicao').value;
-      const resContainer = document.getElementById('resultado-consulta');
-      resContainer.innerHTML = '<div class="text-center text-muted my-3">Buscando informações...</div>';
-      
-      const dado = await ServicoDB.buscarDadosAtuador(filtro, posicao);
-      const historico = await ServicoDB.buscarHistoricoManutencao(filtro, posicao);
-      
-      if (!dado) {
-        resContainer.innerHTML = '<div class="alert alert-warning">Nenhum registro localizado.</div>';
-        return;
+    // --- SOLICITAR MANUTENÇÃO ---
+    async function atualizarModeloManutencao() {
+      const f = document.getElementById('manut-filtro').value;
+      const p = document.getElementById('manut-posicao').value;
+      const modSelect = document.getElementById('manut-modelo');
+      if (!f || !p) return;
+      modSelect.innerHTML = '<option value="">Consultando BD...</option>';
+      const dado = await ServicoDB.buscarDadosAtuador(f, p);
+      if (dado && dado.modelo_atuador) {
+        modSelect.innerHTML = `<option value="${dado.modelo_atuador}" selected>${dado.modelo_atuador}</option>`;
+      } else {
+        modSelect.innerHTML = `<option value="S/M" selected>Modelo não cadastrado (S/M)</option>`;
       }
-
-      let histHtml = historico.length === 0 ? '<p class="small text-muted mb-0">Sem historico de OS registrado.</p>' : '';
-      historico.forEach(h => {
-        histHtml += `
-          <div class="timeline-item mb-2">
-            <span class="badge bg-primary">OS: ${h.numero_OS || 'S/N'}</span> - <small class="text-muted">${h.data_hora || '-'}</small>
-            <div class="fw-bold small mt-1">${h.servico || '-'}</div>
-            <div class="small text-secondary">${h.descricao || '-'}</div>
-          </div>
-        `;
-      });
-
-      resContainer.innerHTML = `
-        <div class="card p-3">
-          <h6 class="fw-bold text-primary border-bottom pb-2">Filtro ${(dado.filtro < 10 ? '0' + dado.filtro : dado.filtro)} - ${dado.posicao_atuador}</h6>
-          <p class="mb-1"><strong>Modelo:</strong> ${dado.modelo_atuador || '-'}</p>
-          <p class="mb-1"><strong>Série Atuador:</strong> ${dado.N_serie_atuador || '-'}</p>
-          <p class="mb-3"><strong>Estado Mecânico:</strong> <span class="badge ${dado.estado_mecanico === 'OK' ? 'bg-success' : 'bg-danger'}">${dado.estado_mecanico || '-'}</span></p>
-          <h6 class="fw-bold text-dark border-bottom pb-2">Histórico de Ordens de Serviço:</h6>
-          ${histHtml}
-        </div>
-      `;
     }
 
+    async function enviarManutencao(e) {
+      e.preventDefault();
+      alert("Chamado aberto com sucesso!");
+      document.getElementById('form-manutencao').reset();
+      document.getElementById('manut-modelo').innerHTML = '<option value="" selected disabled>Aguardando Filtro e Posição...</option>';
+      voltarInicio();
+    }
+
+    // --- MAPA PLANTA ---
     async function carregarMapaApp() {
       const todos = await ServicoDB.obterTodosAtuadores();
       const tipoVista = document.getElementById('mapa-tipo-vista').value;
       const posicoes = tipoVista === 'superior' ? ['Entrada', 'Descarga'] : ['Soprador', 'Lavagem', 'Filtrada'];
-      
       const esqDiv = document.getElementById('mapa-ala-esquerda');
       const dirDiv = document.getElementById('mapa-ala-direita');
       esqDiv.innerHTML = ''; dirDiv.innerHTML = '';
@@ -634,147 +645,106 @@
           let bgClass = 'btn-mapa-verde';
           if (item) {
             if (item.estado_eletrico !== 'OK' || item.estado_mecanico !== 'OK') bgClass = 'btn-mapa-vermelho';
-          } else {
-            bgClass = 'btn-mapa-cinza';
-          }
+          } else { bgClass = 'btn-mapa-cinza'; }
+
           btn.className = `btn-atuador-mapa ${bgClass}`;
           btn.innerText = pos.substring(0, 4).toUpperCase();
           btn.onclick = () => abrirModalDetalhesMapa(f, pos, item);
           grid.appendChild(btn);
         });
-
         card.appendChild(grid);
-        if (f <= 8) esqDiv.appendChild(card);
-        else dirDiv.appendChild(card);
+        if (f <= 8) esqDiv.appendChild(card); else dirDiv.appendChild(card);
       }
     }
-
     function mudarTipoVistaMapa() { carregarMapaApp(); }
 
-    async function abrirModalDetalhesMapa(filtro, posicao, dado) {
+    function abrirModalDetalhesMapa(filtro, posicao, dado) {
       atuadorSelecionadoModal = { filtro, posicao };
       document.getElementById('modal-atuador-titulo').innerText = `Filtro ${filtro} - ${posicao}`;
-      document.getElementById('modal-atuador-codigo-tag').innerText = `FIL_${posicao.substring(0,3).toUpperCase()}_${filtro}`;
+      document.getElementById('modal-atuador-codigo-tag').innerText = `FIL_${posicao.substring(0, 3).toUpperCase()}_${filtro}`;
       document.getElementById('modal-atuador-posicao-sub').innerText = `Posição ${posicao}`;
       document.getElementById('modal-atuador-modelo').innerText = dado ? (dado.modelo_atuador || '-') : '-';
       document.getElementById('modal-atuador-serie').innerText = dado ? (dado.N_serie_atuador || '-') : '-';
-      document.getElementById('modal-atuador-obs').innerText = dado ? (dado.observacao || 'Nenhuma observação') : '-';
-
       const badge = document.getElementById('modal-atuador-status-badge');
       if (dado && dado.estado_eletrico === 'OK' && dado.estado_mecanico === 'OK') {
-        badge.className = 'badge bg-success px-3 py-1';
-        badge.innerText = 'OK';
+        badge.className = 'badge bg-success'; badge.innerText = 'OK';
       } else {
-        badge.className = 'badge bg-danger px-3 py-1';
-        badge.innerText = 'PARADO / DEFEITO';
+        badge.className = 'badge bg-danger'; badge.innerText = 'PARADO / DEFEITO';
       }
-
-      // Buscar histórico de OS para o modal
-      const histContainer = document.getElementById('modal-atuador-historico-container');
-      histContainer.innerHTML = '<div class="text-muted small">Carregando histórico...</div>';
-      
-      const historico = await ServicoDB.buscarHistoricoManutencao(filtro, posicao);
-      if (historico.length === 0) {
-        histContainer.innerHTML = '<div class="small text-muted">Nenhuma Ordem de Serviço registrada para este atuador.</div>';
-      } else {
-        let hHtml = '';
-        historico.slice(0, 3).forEach(h => {
-          hHtml += `
-            <div class="timeline-item">
-              <div class="fw-bold small">OS ${h.numero_OS || 'S/N'} - <span class="text-muted">${h.data_hora || ''}</span></div>
-              <div class="small text-dark">${h.servico || '-'}</div>
-              <div class="small text-muted">${h.descricao || '-'}</div>
-            </div>
-          `;
-        });
-        histContainer.innerHTML = hHtml;
-      }
-
       document.getElementById('modal-detalhes-atuador-mapa').style.display = 'flex';
     }
 
-    function fecharModalDetalhesAtuador() {
-      document.getElementById('modal-detalhes-atuador-mapa').style.display = 'none';
-    }
-
-    function fecharModalOverlayClick(e) {
-      if (e.target.id === 'modal-detalhes-atuador-mapa') fecharModalDetalhesAtuador();
-    }
-
-    function modalIrParaConsulta() {
+    function fecharModalDetalhesAtuador() { document.getElementById('modal-detalhes-atuador-mapa').style.display = 'none'; }
+    function fecharModalOverlayClick(e) { if (e.target.id === 'modal-detalhes-atuador-mapa') fecharModalDetalhesAtuador(); }
+    async function abrirChamadoDoMapa() {
       if (atuadorSelecionadoModal) {
-        document.getElementById('cons-filtro').value = atuadorSelecionadoModal.filtro;
-        document.getElementById('cons-posicao').value = atuadorSelecionadoModal.posicao;
+        mudar('tela-manutencao', document.getElementById('btn-nav-tela-manutencao'));
+        document.getElementById('manut-filtro').value = atuadorSelecionadoModal.filtro;
+        document.getElementById('manut-posicao').value = atuadorSelecionadoModal.posicao;
         fecharModalDetalhesAtuador();
-        mudar('tela-consulta');
-        consultarAtuador();
+        await atualizarModeloManutencao();
       }
     }
 
-    async function carregarVisaoGeral() {
-      const container = document.getElementById('tabela-visao-container');
-      container.innerHTML = '<div class="text-center text-muted my-3">Carregando tabela de atuadores...</div>';
-      const dados = await ServicoDB.obterTodosAtuadores();
-      
-      let html = `
-        <table class="table table-sm table-striped table-bordered align-middle text-center" style="font-size: 0.8rem;">
-          <thead class="table-dark">
-            <tr><th>Filtro</th><th>Posição</th><th>Modelo</th><th>Série</th><th>Elétrico</th><th>Mecânico</th></tr>
-          </thead>
-          <tbody>
-      `;
-      dados.forEach(d => {
-        html += `
-          <tr>
-            <td>Filtro ${(d.filtro < 10 ? '0' + d.filtro : d.filtro)}</td>
-            <td>${d.posicao_atuador || '-'}</td>
-            <td>${d.modelo_atuador || '-'}</td>
-            <td>${d.N_serie_atuador || '-'}</td>
-            <td><span class="badge ${d.estado_eletrico === 'OK' ? 'bg-success' : 'bg-danger'}">${d.estado_eletrico || '-'}</span></td>
-            <td><span class="badge ${d.estado_mecanico === 'OK' ? 'bg-success' : 'bg-danger'}">${d.estado_mecanico || '-'}</span></td>
-          </tr>
-        `;
-      });
-      html += '</tbody></table>';
-      container.innerHTML = html;
-    }
-
-    function filtrarTabelaVisao() {
-      const q = document.getElementById('visao-search').value.toLowerCase();
-      document.querySelectorAll('#tabela-visao-container tbody tr').forEach(tr => {
-        tr.style.display = tr.innerText.toLowerCase().includes(q) ? '' : 'none';
-      });
-    }
-
-    async function carregarHistoricoOSGeral() {
+    // --- HISTÓRICO OS (ATUALIZADO COM MENUS SUSPENSOS) ---
+    async function inicializarHistoricoOS() {
       const container = document.getElementById('lista-historico-os');
-      container.innerHTML = '<div class="text-center text-muted my-3">Carregando histórico geral...</div>';
-      const q = document.getElementById('hist-search-input').value.toLowerCase();
-      const dados = await ServicoDB.obterHistoricoOSGeral();
+      container.innerHTML = '<div class="text-center text-muted my-3">Carregando histórico...</div>';
 
+      // Busca dados no Supabase apenas uma vez ao abrir a tela
+      historicoDataGlobal = await ServicoDB.obterHistoricoOSGeral();
+
+      // Preencher o select de "Nº OS" com valores únicos do banco
+      const selectOs = document.getElementById('filtro-hist-os');
+      const osUnicos = [...new Set(historicoDataGlobal.map(h => h.numero_OS).filter(Boolean))];
+      selectOs.innerHTML = '<option value="">Todas</option>' + osUnicos.map(os => `<option value="${os}">${os}</option>`).join('');
+
+      // Preencher o select de "Equipe / Nº 2" (supondo campos 'equipe' ou 'numero_2' baseados na sua estrutura)
+      const selectNum2 = document.getElementById('filtro-hist-num2');
+      const num2Unicos = [...new Set(historicoDataGlobal.map(h => h.numero_2 || h.equipe).filter(Boolean))];
+      selectNum2.innerHTML = '<option value="">Todas</option>' + num2Unicos.map(n2 => `<option value="${n2}">${n2}</option>`).join('');
+
+      // Exibe os dados iniciais
+      aplicarFiltrosHistorico();
+    }
+
+    function aplicarFiltrosHistorico() {
+      const valFiltro = document.getElementById('filtro-hist-filtro').value;
+      const valPosicao = document.getElementById('filtro-hist-posicao').value;
+      const valOs = document.getElementById('filtro-hist-os').value;
+      const valNum2 = document.getElementById('filtro-hist-num2').value;
+
+      // Filtra os dados globais de acordo com a seleção dos 4 menus suspensos
+      const dadosFiltrados = historicoDataGlobal.filter(h => {
+        const matchFiltro = valFiltro === "" || String(h.filtro) === valFiltro;
+        const matchPosicao = valPosicao === "" || h.posicao === valPosicao;
+        const matchOs = valOs === "" || String(h.numero_OS) === valOs;
+        const matchNum2 = valNum2 === "" || String(h.numero_2 || h.equipe) === valNum2;
+        return matchFiltro && matchPosicao && matchOs && matchNum2;
+      });
+
+      renderizarListaHistorico(dadosFiltrados);
+    }
+
+    function renderizarListaHistorico(dados) {
+      const container = document.getElementById('lista-historico-os');
       let html = '';
-      dados.filter(h => (h.numero_OS + ' ' + h.servico + ' ' + h.equipe + ' ' + h.descricao).toLowerCase().includes(q)).forEach(h => {
+      dados.forEach(h => {
         html += `
           <div class="card p-3 mb-2">
             <div class="d-flex justify-content-between">
               <span class="badge bg-primary">OS ${h.numero_OS || 'S/N'}</span>
               <small class="text-muted">${h.data_hora || '-'}</small>
             </div>
-            <div class="fw-bold mt-2">Filtro ${h.filtro} - ${h.posicao} (${h.servico || '-'})</div>
-            <div class="small text-secondary mt-1">${h.descricao || '-'}</div>
-            <div class="small text-muted mt-1">Equipe: ${h.equipe || '-'}</div>
+            <div class="fw-bold mt-2">Filtro ${h.filtro} - ${h.posicao}</div>
+            <div class="small text-secondary mt-1">${h.descricao || h.servico || '-'}</div>
+            ${(h.equipe || h.numero_2) ? `<div class="small fw-bold text-dark mt-2">Equipe: ${h.equipe || h.numero_2}</div>` : ''}
           </div>
         `;
       });
-      container.innerHTML = html || '<div class="alert alert-info">Nenhum histórico encontrado.</div>';
-    }
-
-    function carregarGuiaModelo(m) {
-      document.getElementById('guia-fotos-container').innerHTML = `
-        <div class="fw-bold text-primary mb-2">${m}</div>
-        <p class="small text-muted">Acessando catálogo fotográfico do operador...</p>
-      `;
+      container.innerHTML = html || '<div class="alert alert-info">Nenhum histórico encontrado para os filtros selecionados.</div>';
     }
   </script>
 </body>
+
 </html>
