@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="192" height="192">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f9d58" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)" />
+  <g transform="translate(256, 235)">
+    <path d="M -20,-160 L 20,-160 L 25,-120 A 120,120 0 0,1 75,-100 L 110,-125 L 138,-97 L 113,-62 A 120,120 0 0,1 133,-12 L 173,-7 L 173,33 L 133,38 A 120,120 0 0,1 113,88 L 138,123 L 110,151 L 75,126 A 120,120 0 0,1 25,146 L 20,186 L -20,186 L -25,146 A 120,120 0 0,1 -75,126 L -110,151 L -138,123 L -113,88 A 120,120 0 0,1 -133,38 L -173,33 L -173,-7 L -133,-12 A 120,120 0 0,1 -113,-62 L -138,-97 L -110,-125 L -75,-100 A 120,120 0 0,1 -25,-120 Z" fill="rgba(255,255,255,0.18)" stroke="#ffffff" stroke-width="10" stroke-linejoin="round" />
+    <circle cx="0" cy="0" r="75" fill="rgba(255,255,255,0.25)" stroke="#ffffff" stroke-width="8" />
+    <polygon points="-45,-35 45,-35 25,35 -25,35" fill="rgba(255,255,255,0.9)" stroke="#ffffff" stroke-width="4" />
+    <circle cx="0" cy="0" r="16" fill="#0f9d58" stroke="#ffffff" stroke-width="5" />
+  </g>
+  <text x="256" y="445" font-family="'Inter', sans-serif" font-weight="800" font-size="38" fill="#ffffff" text-anchor="middle" letter-spacing="3" opacity="0.95">ETA PIRAPAMA</text>
+</svg>
