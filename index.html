@@ -2,14 +2,28 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>App Operador - ETA Pirapama</title>
+
+  <!-- PWA & Meta Tags iOS/Android -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d8a72">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Operador ETA">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <!-- Fontes & Estilos Bootstrap 5 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Supabase JS Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root {
       --header-bg: #0d8a72;
@@ -23,6 +37,7 @@
       --btn-red: #be202e;
       --btn-blue: #0b5ed7;
     }
+
     body {
       background-color: var(--bg-color);
       min-height: 100vh;
@@ -30,19 +45,23 @@
       font-family: 'Inter', sans-serif;
       color: var(--text-main);
       margin: 0;
+      -webkit-tap-highlight-color: transparent;
     }
-    /* HEADER SUPERIOR */
+
+    /* HEADER */
     .header {
       background-color: var(--header-bg);
       color: #ffffff;
-      padding: 12px 15px;
+      padding: 14px 15px;
       text-align: center;
       font-weight: 700;
       font-size: 1.05rem;
       position: sticky;
       top: 0;
       z-index: 1020;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+
     .screen {
       display: none;
       padding: 15px;
@@ -50,75 +69,66 @@
     .active-screen {
       display: block;
     }
-    /* TÍTULO E BOTÃO FECHAR MAPA */
+
+    /* MAPA PLANTA */
     .btn-mapa-close {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 2px solid #0d6efd;
-      background: #ffffff;
-      color: #0d6efd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 2px solid #0d6efd; background: #ffffff; color: #0d6efd;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: bold; cursor: pointer; text-decoration: none;
     }
-    /* CARD CONTROLE VISTA E LEGENDA */
+
     .mapa-control-card {
       background: #ffffff;
       border: 1px solid #cbd5e1;
       border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 20px;
+      padding: 14px;
+      margin-bottom: 15px;
     }
+
     .mapa-select-vista {
       border: 2px solid #0d6efd;
       color: #0d6efd;
       font-weight: 700;
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 8px 12px;
       width: 100%;
       background-color: #ffffff;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       outline: none;
     }
+
     .mapa-ala-title {
       text-align: center;
       font-weight: 800;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: #475569;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       letter-spacing: 0.5px;
     }
-    /* CARDS DOS FILTROS */
+
     .mapa-filtro-card {
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 12px;
       padding: 12px;
       margin-bottom: 12px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
     }
+
     .mapa-filtro-header {
       text-align: center;
       font-weight: 800;
       font-size: 0.85rem;
       margin-bottom: 10px;
       color: #1e293b;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 4px;
     }
-    .mapa-atuadores-grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .mapa-atuadores-grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-    }
+
+    .mapa-atuadores-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .mapa-atuadores-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+
     .btn-atuador-mapa {
       border: none;
       border-radius: 8px;
@@ -130,173 +140,149 @@
       cursor: pointer;
       width: 100%;
       letter-spacing: 0.5px;
-      transition: opacity 0.15s;
+      transition: transform 0.1s ease, opacity 0.15s;
     }
-    .btn-atuador-mapa:active {
-      opacity: 0.85;
-    }
-    .btn-atuador-mapa.btn-mapa-verde {
-      background-color: var(--btn-green);
-    }
-    .btn-atuador-mapa.btn-mapa-vermelho {
-      background-color: var(--btn-red);
-    }
-    .btn-atuador-mapa.btn-mapa-azul {
-      background-color: var(--btn-blue);
-    }
-    /* MODAL DE DETALHES */
+    .btn-atuador-mapa:active { transform: scale(0.97); opacity: 0.9; }
+    .btn-atuador-mapa.btn-mapa-verde { background-color: var(--btn-green); }
+    .btn-atuador-mapa.btn-mapa-vermelho { background-color: var(--btn-red); }
+    .btn-atuador-mapa.btn-mapa-azul { background-color: var(--btn-blue); }
+
+    /* MODAL FLUTUANTE */
     .modal-overlay-mapa {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(15, 23, 42, 0.5);
-      backdrop-filter: blur(2px);
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(3px);
       z-index: 10500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       padding: 16px;
     }
+
     .modal-box-detalhes {
       background: #ffffff;
       border-radius: 14px;
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      max-width: 410px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
       overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
     }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .modal-header-azul {
       background: #0284c7;
       color: #ffffff;
       padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .modal-header-azul h5 {
-      margin: 0;
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
+
     .box-tag-info {
-      background-color: #ffffff;
-      border-radius: 8px;
-      padding: 0;
-      margin-bottom: 14px;
+      background-color: #f8fafc;
+      border-radius: 10px;
+      padding: 10px;
+      border: 1px solid #e2e8f0;
     }
+
     .box-detalhes-lista {
       border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 12px 16px;
+      border-radius: 10px;
+      padding: 10px 14px;
       margin-bottom: 16px;
       background-color: #ffffff;
     }
+
     .item-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
+      display: flex; justify-content: space-between; align-items: center; padding: 8px 0;
     }
-    .item-row:not(:last-child) {
-      border-bottom: 1px solid #f1f5f9;
-    }
-    .badge-status-ok {
-      background-color: #198754;
-      color: #ffffff;
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-weight: 700;
-    }
-    .badge-status-falha {
-      background-color: #dc3545;
-      color: #ffffff;
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-weight: 700;
-    }
-    .badge-status-azul {
-      background-color: var(--btn-blue);
-      color: #ffffff;
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-weight: 700;
-    }
+    .item-row:not(:last-child) { border-bottom: 1px solid #f1f5f9; }
+
+    .badge-status-ok { background-color: #198754; color: #ffffff; font-size: 0.78rem; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+    .badge-status-falha { background-color: #dc3545; color: #ffffff; font-size: 0.78rem; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+    .badge-status-azul { background-color: var(--btn-blue); color: #ffffff; font-size: 0.78rem; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+
     .btn-abrir-os {
       background-color: #e03b4e;
       color: #ffffff;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       width: 100%;
       padding: 12px;
       font-weight: 700;
       font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background-color 0.2s;
     }
-    /* BARRA DE NAVEGAÇÃO INFERIOR */
+    .btn-abrir-os:active { background-color: #be202e; }
+
+    /* BARRA NAVEGAÇÃO INFERIOR */
     .nav-bottom {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
+      position: fixed; bottom: 0; left: 0; width: 100%;
       background: #ffffff;
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 0 10px 0;
+      display: flex; justify-content: space-around;
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom)) 0;
       border-top: 1px solid #e2e8f0;
       z-index: 1000;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
     }
+
     .nav-item {
-      border: none;
-      background: none;
-      font-size: 11px;
-      color: #64748b;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex: 1;
-      font-weight: 600;
+      border: none; background: none; font-size: 11px;
+      color: #64748b; display: flex; flex-direction: column; align-items: center;
+      flex: 1; font-weight: 600; cursor: pointer;
     }
-    .nav-item.active {
-      color: #0284c7;
-    }
-    .nav-icon {
-      font-size: 1.2rem;
-      margin-bottom: 2px;
-    }
+    .nav-item.active { color: #0284c7; font-weight: 700; }
+    .nav-icon { font-size: 1.25rem; margin-bottom: 2px; }
+
     .btn-voltar {
-      background-color: #ffffff;
-      color: #0284c7;
-      border: 1px solid #93c5fd;
-      font-weight: 600;
-      border-radius: 8px;
-      padding: 6px 14px;
-      margin-bottom: 15px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      background-color: #ffffff; color: #0284c7; border: 1px solid #93c5fd;
+      font-weight: 600; border-radius: 8px; padding: 6px 14px; margin-bottom: 15px;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    /* PWA BANNER DE INSTALAÇÃO */
+    #pwa-install-banner {
+      position: fixed; bottom: 70px; left: 15px; right: 15px;
+      background: #1e293b; color: #ffffff; border-radius: 12px;
+      padding: 12px 16px; z-index: 10000; display: none;
+      align-items: center; justify-content: space-between;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
   </style>
 </head>
 <body>
+
+  <!-- HEADER -->
   <div class="header">👷‍♂️ App Operador - ETA Pirapama</div>
+
+  <!-- BANNER INSTALAÇÃO PWA -->
+  <div id="pwa-install-banner">
+    <div class="d-flex align-items-center gap-2">
+      <span style="font-size: 1.5rem;">📲</span>
+      <div>
+        <div class="fw-bold style-sm" style="font-size: 0.85rem;">Instalar Aplicativo</div>
+        <div style="font-size: 0.75rem; color: #cbd5e1;">Acesso rápido na tela inicial</div>
+      </div>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-sm btn-outline-light" onclick="fecharBannerPWA()">Depois</button>
+      <button class="btn btn-sm btn-success fw-bold" onclick="instalarPWA()">Instalar</button>
+    </div>
+  </div>
+
   <!-- TELA INÍCIO -->
   <div id="tela-inicio" class="screen">
     <div class="text-center mt-3 mb-4">
-      <div style="font-size: 3rem;">⚙️</div>
+      <div style="font-size: 3.2rem;">⚙️</div>
       <h2 class="fw-bolder" style="font-size: 1.4rem;">Operação de Atuadores</h2>
-      <h5 class="text-muted" style="font-size: 0.95rem;">Painel de Acesso Rápido</h5>
+      <h5 class="text-muted" style="font-size: 0.92rem;">Painel de Acesso Rápido</h5>
     </div>
+
     <div class="row row-cols-1 g-3">
       <div class="col">
-        <div class="card h-100 text-center p-4 border rounded-3" style="cursor:pointer;"
+        <div class="card h-100 text-center p-4 border rounded-3 shadow-sm" style="cursor:pointer;"
           onclick="mudar('tela-manutencao', document.getElementById('btn-nav-tela-manutencao'))">
           <div class="fs-1 mb-2">🛠️</div>
           <div class="fw-bold fs-5">Solicitar Manutenção</div>
@@ -304,16 +290,17 @@
         </div>
       </div>
     </div>
+
     <div class="row row-cols-2 g-3 mt-1">
       <div class="col">
-        <div class="card h-100 text-center p-3 border rounded-3" style="cursor:pointer;"
+        <div class="card h-100 text-center p-3 border rounded-3 shadow-sm" style="cursor:pointer;"
           onclick="mudar('tela-mapa', document.getElementById('btn-nav-tela-mapa'))">
           <div class="fs-1 mb-2">🗺️</div>
           <div class="fw-bold" style="font-size:0.95rem;">Mapa Planta</div>
         </div>
       </div>
       <div class="col">
-        <div class="card h-100 text-center p-3 border rounded-3" style="cursor:pointer;"
+        <div class="card h-100 text-center p-3 border rounded-3 shadow-sm" style="cursor:pointer;"
           onclick="mudar('tela-historico-os', document.getElementById('btn-nav-tela-historico'))">
           <div class="fs-1 mb-2">📜</div>
           <div class="fw-bold" style="font-size:0.95rem;">Histórico OS</div>
@@ -321,13 +308,13 @@
       </div>
     </div>
   </div>
-  <!-- TELA SOLICITAR MANUTENÇÃO -->
+
+  <!-- TELA MANUTENÇÃO -->
   <div id="tela-manutencao" class="screen">
     <button class="btn-voltar" onclick="voltarInicio()">⬅️ Voltar</button>
-    <div class="card p-3 border rounded-3">
+    <div class="card p-3 border rounded-3 shadow-sm">
       <h5 class="fw-bold mb-3">🛠️ Solicitar Manutenção</h5>
       <form id="form-manutencao" onsubmit="enviarManutencao(event)">
-        <!-- NOVOS CAMPOS: NOME DO OPERADOR E UNIDADE -->
         <div class="mb-3">
           <label class="form-label fw-bold text-primary">Nome Operador</label>
           <input type="text" id="manut-operador" class="form-control" placeholder="Escreva o seu nome" required>
@@ -365,28 +352,27 @@
         </div>
         <div class="mb-3">
           <label class="form-label fw-bold">4. Descrição do Problema</label>
-          <textarea id="manut-descricao" class="form-control" rows="3"
-            placeholder="Descreva o defeito apresentado ou serviço necessário..." required></textarea>
+          <textarea id="manut-descricao" class="form-control" rows="3" placeholder="Descreva o defeito apresentado..." required></textarea>
         </div>
         <div class="mb-4">
           <label class="form-label fw-bold">5. Anexar Mídia / Foto</label>
           <input type="file" id="manut-foto" class="form-control" accept="image/*,video/*">
         </div>
         <button type="submit" class="btn btn-primary w-100 fw-bold p-2 mb-2">Enviar Solicitação</button>
-        <!-- BOTÃO EXPORTAR WHATSAPP -->
         <button type="button" class="btn btn-success w-100 fw-bold p-2" onclick="exportarParaWhatsapp()">
-          <span style="font-size:1.1rem;">📱</span> Exportar para o Zap
+          📱 Exportar para o Zap
         </button>
       </form>
     </div>
   </div>
+
   <!-- TELA MAPA PLANTA -->
   <div id="tela-mapa" class="screen active-screen">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4 class="fw-bold m-0 text-dark">🗺️ Mapa Visual</h4>
       <button class="btn-mapa-close" onclick="voltarInicio()">✕</button>
     </div>
-    <!-- CONTROLE DE VISTA COM LEGENDA INCLUÍDA -->
+
     <div class="mapa-control-card">
       <div class="row align-items-center">
         <div class="col-12 col-md-6 mb-2 mb-md-0">
@@ -396,20 +382,14 @@
             <option value="inferior" selected>Vista Inferior (Ar / Lav. / Filtrada)</option>
           </select>
         </div>
-        <div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-center flex-wrap gap-2 mt-2 mt-md-0"
-          style="font-size: 0.75rem; font-weight: 600; color: #475569;">
-          <span class="d-flex align-items-center"><span
-              style="display:inline-block; width:12px; height:12px; background-color: var(--btn-green); margin-right:4px; border-radius:2px;"></span>
-            OK / Operação</span>
-          <span class="d-flex align-items-center"><span
-              style="display:inline-block; width:12px; height:12px; background-color: var(--btn-red); margin-right:4px; border-radius:2px;"></span>
-            Parado</span>
-          <span class="d-flex align-items-center"><span
-              style="display:inline-block; width:12px; height:12px; background-color: var(--btn-blue); margin-right:4px; border-radius:2px;"></span>
-            Removido / Obra</span>
+        <div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-center flex-wrap gap-2 mt-2 mt-md-0" style="font-size: 0.75rem; font-weight: 600; color: #475569;">
+          <span class="d-flex align-items-center"><span style="display:inline-block; width:12px; height:12px; background-color: var(--btn-green); margin-right:4px; border-radius:2px;"></span> OK / Operação</span>
+          <span class="d-flex align-items-center"><span style="display:inline-block; width:12px; height:12px; background-color: var(--btn-red); margin-right:4px; border-radius:2px;"></span> Parado</span>
+          <span class="d-flex align-items-center"><span style="display:inline-block; width:12px; height:12px; background-color: var(--btn-blue); margin-right:4px; border-radius:2px;"></span> Removido / Obra</span>
         </div>
       </div>
     </div>
+
     <div class="row g-3">
       <div class="col-12 col-md-6">
         <div class="mapa-ala-title">ALA ESQUERDA (1 ao 8)</div>
@@ -421,12 +401,12 @@
       </div>
     </div>
   </div>
-  <!-- MODAL DE DETALHES DO ATUADOR (FORMATO GESTÃO) -->
-  <div id="modal-detalhes-atuador-mapa" class="modal-overlay-mapa" style="display: none;"
-    onclick="fecharModalOverlayClick(event)">
+
+  <!-- MODAL DE DETALHES -->
+  <div id="modal-detalhes-atuador-mapa" class="modal-overlay-mapa" style="display: none;" onclick="fecharModalOverlayClick(event)">
     <div class="modal-box-detalhes" onclick="event.stopPropagation()">
       <div class="modal-header-azul">
-        <h5 id="modal-atuador-titulo">Filtro 1 - Descarga</h5>
+        <h5 id="modal-atuador-titulo" class="m-0 fw-bold">Filtro 1 - Descarga</h5>
         <button class="btn-close btn-close-white" onclick="fecharModalDetalhesAtuador()"></button>
       </div>
       <div class="p-3">
@@ -438,6 +418,7 @@
             <div class="small text-muted" id="modal-atuador-posicao-sub">Posição Descarga</div>
           </div>
         </div>
+
         <div class="box-detalhes-lista">
           <div class="item-row">
             <strong class="text-dark">Status Geral:</strong>
@@ -460,17 +441,19 @@
             <span id="modal-atuador-obs" class="text-muted small">Nenhuma observação registrada.</span>
           </div>
         </div>
+
         <button class="btn-abrir-os" onclick="abrirChamadoDoMapa()">
           <span style="font-size:1.1rem;">🛠️</span> Abrir Chamado (Preencher OS)
         </button>
       </div>
     </div>
   </div>
+
   <!-- TELA HISTÓRICO OS -->
   <div id="tela-historico-os" class="screen">
     <button class="btn-voltar" onclick="voltarInicio()">⬅️ Voltar</button>
     <h5 class="fw-bold mb-3">📜 Histórico de Manutenções (OS)</h5>
-    <div class="card p-3 mb-3 border rounded-3">
+    <div class="card p-3 mb-3 border rounded-3 shadow-sm">
       <div class="row g-2">
         <div class="col-6">
           <label class="form-label small fw-bold mb-1">Filtro</label>
@@ -506,34 +489,32 @@
     </div>
     <div id="lista-historico-os"></div>
   </div>
+
   <!-- NAVEGAÇÃO INFERIOR -->
   <div class="nav-bottom">
-    <button class="nav-item" id="btn-nav-tela-inicio" onclick="mudar('tela-inicio', this)"><span
-        class="nav-icon">🏠</span>Início</button>
-    <button class="nav-item" id="btn-nav-tela-manutencao" onclick="mudar('tela-manutencao', this)"><span
-        class="nav-icon">🛠️</span>Manutenção</button>
-    <button class="nav-item active" id="btn-nav-tela-mapa" onclick="mudar('tela-mapa', this)"><span
-        class="nav-icon">🗺️</span>Mapa</button>
-    <button class="nav-item" id="btn-nav-tela-historico" onclick="mudar('tela-historico-os', this)"><span
-        class="nav-icon">📜</span>Histórico</button>
+    <button class="nav-item" id="btn-nav-tela-inicio" onclick="mudar('tela-inicio', this)"><span class="nav-icon">🏠</span>Início</button>
+    <button class="nav-item" id="btn-nav-tela-manutencao" onclick="mudar('tela-manutencao', this)"><span class="nav-icon">🛠️</span>Manutenção</button>
+    <button class="nav-item active" id="btn-nav-tela-mapa" onclick="mudar('tela-mapa', this)"><span class="nav-icon">🗺️</span>Mapa</button>
+    <button class="nav-item" id="btn-nav-tela-historico" onclick="mudar('tela-historico-os', this)"><span class="nav-icon">📜</span>Histórico</button>
   </div>
+
   <script>
     // CONFIGURAÇÃO SUPABASE
     const SUPABASE_URL = 'https://foctlpygsbrxrrrphkah.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvY3RscHlnc2JyeHJycnBoa2FoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzMDI2OTAsImV4cCI6MjEwMzg3ODY5MH0.XOdcn0vyysYXGJqijQ80JijkY2U4t4nL5tBsDXDeOZc';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    
-    // ==========================================
-    // SINCRONIZAÇÃO (POLLING - À PROVA DE FIREWALL)
+
+    // SINCRONIZAÇÃO AUTOMÁTICA EM TEMPO REAL (POLLING 3s)
     setInterval(() => {
-      // Atualiza o mapa a cada 3 segundos
-      carregarMapaApp(); 
-    }, 3000); 
-    // ==========================================
-    
+      const telaMapa = document.getElementById('tela-mapa');
+      if (telaMapa && telaMapa.classList.contains('active-screen')) {
+        carregarMapaApp();
+      }
+    }, 3000);
+
     let atuadorSelecionadoModal = null;
     let historicoDataGlobal = [];
-    
+
     const ServicoDB = {
       async obterTodosAtuadores() {
         const { data, error } = await _supabase.from('banco_dados').select('*').order('id', { ascending: true });
@@ -548,6 +529,7 @@
         if (error) console.error(error); return data || [];
       }
     };
+
     function mudar(id, btn) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
       document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -558,7 +540,9 @@
       if (id === 'tela-historico-os') inicializarHistoricoOS();
       window.scrollTo(0, 0);
     }
+
     function voltarInicio() { mudar('tela-inicio', document.getElementById('btn-nav-tela-inicio')); }
+
     async function atualizarModeloManutencao() {
       const f = document.getElementById('manut-filtro').value;
       const p = document.getElementById('manut-posicao').value;
@@ -572,14 +556,15 @@
         modSelect.innerHTML = `<option value="CSR25M" selected>CSR25M</option>`;
       }
     }
+
     async function enviarManutencao(e) {
       e.preventDefault();
       alert("Solicitação registrada com sucesso!");
       document.getElementById('form-manutencao').reset();
-      document.getElementById('manut-unidade').value = 'ETA PIRAPAMA'; // restaura
+      document.getElementById('manut-unidade').value = 'ETA PIRAPAMA';
       voltarInicio();
     }
-    // NOVA FUNÇÃO: Exportar para WhatsApp
+
     function exportarParaWhatsapp() {
       const operador = document.getElementById('manut-operador').value.trim() || 'Não informado';
       const unidade = document.getElementById('manut-unidade').value;
@@ -601,25 +586,29 @@
       const linkWa = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
       window.open(linkWa, '_blank');
     }
+
     async function carregarMapaApp() {
       const todos = await ServicoDB.obterTodosAtuadores();
       const tipoVista = document.getElementById('mapa-tipo-vista').value;
       const esqDiv = document.getElementById('mapa-ala-esquerda');
       const dirDiv = document.getElementById('mapa-ala-direita');
+      if (!esqDiv || !dirDiv) return;
       esqDiv.innerHTML = ''; dirDiv.innerHTML = '';
       const posicoes = tipoVista === 'superior' ? ['Entrada', 'Descarga'] : ['Soprador', 'Lavagem', 'Filtrada'];
+
       for (let f = 1; f <= 16; f++) {
         const card = document.createElement('div');
         card.className = 'mapa-filtro-card';
         card.innerHTML = `<div class="mapa-filtro-header">FILTRO ${(f < 10 ? '0' + f : f)}</div>`;
         const grid = document.createElement('div');
         grid.className = posicoes.length === 2 ? 'mapa-atuadores-grid-2' : 'mapa-atuadores-grid-3';
+
         posicoes.forEach(pos => {
-          const item = todos.find(a => Number(a.filtro) === f && a.posicao_atuador === pos);
+          const item = todos.find(a => Number(a.filtro) === f && (a.posicao_atuador === pos || a.posicao === pos));
           const btn = document.createElement('button');
-          let bgClass = 'btn-mapa-verde'; // Default (OK / Operação)
+          let bgClass = 'btn-mapa-verde';
           if (item) {
-            const st = (item.status_geral || '').toLowerCase();
+            const st = (item.status_atual || item.status_geral || '').toLowerCase();
             if (st.includes('parado') || item.estado_eletrico === 'Parado' || item.estado_mecanico === 'Parado') {
               bgClass = 'btn-mapa-vermelho';
             } else if (st.includes('removido') || st.includes('obra')) {
@@ -637,11 +626,14 @@
           btn.onclick = () => abrirModalDetalhesMapa(f, pos, item);
           grid.appendChild(btn);
         });
+
         card.appendChild(grid);
         if (f <= 8) esqDiv.appendChild(card); else dirDiv.appendChild(card);
       }
     }
+
     function mudarTipoVistaMapa() { carregarMapaApp(); }
+
     function abrirModalDetalhesMapa(filtro, posicao, dado) {
       atuadorSelecionadoModal = { filtro, posicao };
       document.getElementById('modal-atuador-titulo').innerText = `Filtro ${filtro} - ${posicao}`;
@@ -654,36 +646,38 @@
       let fStr = (filtro < 10 ? '0' + filtro : filtro);
       document.getElementById('modal-atuador-codigo-tag').innerText = `FIL_${siglaPos}_${fStr}`;
       document.getElementById('modal-atuador-posicao-sub').innerText = `Posição ${posicao}`;
-      // Detalhes extras no Modal
+
       document.getElementById('modal-atuador-modelo').innerText = dado ? (dado.modelo_atuador || 'CSR25M') : 'CSR25M';
       document.getElementById('modal-atuador-serie').innerText = dado ? (dado.N_serie_atuador || '48983') : '48983';
       document.getElementById('modal-atuador-obs').innerText = dado ? (dado.obs_equipamento || 'Nenhuma observação registrada.') : 'Nenhuma observação registrada.';
       document.getElementById('modal-atuador-ultimo-servico').innerText = dado ? (dado.ultimo_servico || 'Nenhuma OS recente') : 'Nenhuma OS recente';
-      // Definir Imagem (Placeholder padrão se não existir via BD)
+
       const imgModal = document.getElementById('modal-atuador-imagem');
       imgModal.src = (dado && dado.imagem) ? dado.imagem : 'https://via.placeholder.com/60?text=Sem+Foto';
-      // Status Badge (Cor visual do modal)
+
       const badge = document.getElementById('modal-atuador-status-badge');
       let statusText = 'OK / Operação';
       let badgeClass = 'badge-status-ok';
       if (dado) {
-        const st = (dado.status_geral || '').toLowerCase();
+        const st = (dado.status_atual || dado.status_geral || '').toLowerCase();
         if (st.includes('parado') || dado.estado_eletrico === 'Parado' || dado.estado_mecanico === 'Parado') {
           statusText = 'Parado';
           badgeClass = 'badge-status-falha';
         } else if (st.includes('removido') || st.includes('obra')) {
-          statusText = dado.status_geral || 'Removido / Obra';
+          statusText = dado.status_atual || dado.status_geral || 'Removido / Obra';
           badgeClass = 'badge-status-azul';
         } else {
-          statusText = dado.status_geral || 'OK / Operação';
+          statusText = dado.status_atual || dado.status_geral || 'OK / Operação';
         }
       }
       badge.className = badgeClass;
       badge.innerText = statusText;
       document.getElementById('modal-detalhes-atuador-mapa').style.display = 'flex';
     }
+
     function fecharModalDetalhesAtuador() { document.getElementById('modal-detalhes-atuador-mapa').style.display = 'none'; }
     function fecharModalOverlayClick(e) { if (e.target.id === 'modal-detalhes-atuador-mapa') fecharModalDetalhesAtuador(); }
+
     async function abrirChamadoDoMapa() {
       if (atuadorSelecionadoModal) {
         mudar('tela-manutencao', document.getElementById('btn-nav-tela-manutencao'));
@@ -693,6 +687,7 @@
         await atualizarModeloManutencao();
       }
     }
+
     async function inicializarHistoricoOS() {
       const container = document.getElementById('lista-historico-os');
       container.innerHTML = '<div class="text-center text-muted my-3">Carregando histórico...</div>';
@@ -705,6 +700,7 @@
       selectNum2.innerHTML = '<option value="">Todas</option>' + num2Unicos.map(n2 => `<option value="${n2}">${n2}</option>`).join('');
       aplicarFiltrosHistorico();
     }
+
     function aplicarFiltrosHistorico() {
       const valFiltro = document.getElementById('filtro-hist-filtro').value;
       const valPosicao = document.getElementById('filtro-hist-posicao').value;
@@ -719,12 +715,13 @@
       });
       renderizarListaHistorico(dadosFiltrados);
     }
+
     function renderizarListaHistorico(dados) {
       const container = document.getElementById('lista-historico-os');
       let html = '';
       dados.forEach(h => {
         html += `
-          <div class="card p-3 mb-2 border rounded-3">
+          <div class="card p-3 mb-2 border rounded-3 shadow-sm">
             <div class="d-flex justify-content-between">
               <span class="badge bg-primary">OS ${h.numero_OS || 'S/N'}</span>
               <small class="text-muted">${h.data_hora || '-'}</small>
@@ -737,6 +734,42 @@
       });
       container.innerHTML = html || '<div class="alert alert-info">Nenhum histórico encontrado para os filtros selecionados.</div>';
     }
+
+    // REGISTRO DE SERVICE WORKER & INSTALAÇÃO PWA
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const banner = document.getElementById('pwa-install-banner');
+      if (banner) banner.style.display = 'flex';
+    });
+
+    function instalarPWA() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            fecharBannerPWA();
+          }
+          deferredPrompt = null;
+        });
+      }
+    }
+
+    function fecharBannerPWA() {
+      const banner = document.getElementById('pwa-install-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then(
+          reg => console.log('Service Worker registrado:', reg.scope),
+          err => console.log('Falha no Service Worker:', err)
+        );
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       carregarMapaApp();
     });
