@@ -221,7 +221,7 @@
     .nav-bottom {
       position: fixed; bottom: 0; left: 0; width: 100%;
       background: #ffffff;
-      display: flex; justify-content: space-around;
+      display: flex; justify-around: space-around;
       padding: 8px 0 calc(8px + env(safe-area-inset-bottom)) 0;
       border-top: 1px solid #e2e8f0;
       z-index: 1000;
@@ -411,7 +411,7 @@
       </div>
       <div class="p-3">
         <div class="box-tag-info d-flex align-items-center mb-3">
-          <img src="https://via.placeholder.com/60?text=Sem+Foto" id="modal-atuador-imagem"
+          <img src="img/entrada.jpeg" id="modal-atuador-imagem"
             style="width: 65px; height: 65px; object-fit: cover; border-radius: 8px; margin-right: 14px; border: 1px solid #cbd5e1;">
           <div>
             <div class="fw-bold text-dark fs-5" id="modal-atuador-codigo-tag">FIL_DES_01</div>
@@ -652,8 +652,17 @@
       document.getElementById('modal-atuador-obs').innerText = dado ? (dado.obs_equipamento || 'Nenhuma observação registrada.') : 'Nenhuma observação registrada.';
       document.getElementById('modal-atuador-ultimo-servico').innerText = dado ? (dado.ultimo_servico || 'Nenhuma OS recente') : 'Nenhuma OS recente';
 
+      // Mapeamento de imagens locais conforme a posição especificada
+      const imagensPorPosicao = {
+        'Entrada': 'img/entrada.jpeg',
+        'Descarga': 'img/descarga.jpeg',
+        'Filtrada': 'img/foto3.jpeg',
+        'Lavagem': 'img/foto3.jpeg',
+        'Soprador': 'img/foto3.jpeg'
+      };
+
       const imgModal = document.getElementById('modal-atuador-imagem');
-      imgModal.src = (dado && dado.imagem) ? dado.imagem : 'https://via.placeholder.com/60?text=Sem+Foto';
+      imgModal.src = (dado && dado.imagem) ? dado.imagem : (imagensPorPosicao[posicao] || 'img/foto3.jpeg');
 
       const badge = document.getElementById('modal-atuador-status-badge');
       let statusText = 'OK / Operação';
