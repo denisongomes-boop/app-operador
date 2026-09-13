@@ -5,14 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>App Operador - ETA Pirapama</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     :root {
       --header-bg: #0d8a72;
@@ -56,6 +54,253 @@
 
     .active-screen {
       display: block;
+    }
+
+    /* TELA INÍCIO REFINADA */
+    .inicio-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6px 0 20px 0;
+    }
+
+    .inicio-hero-card {
+      background: linear-gradient(135deg, #0d8a72 0%, #065345 100%);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px -5px rgba(13, 138, 114, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .inicio-hero-card::after {
+      content: '⚙️';
+      position: absolute;
+      right: -10px;
+      bottom: -15px;
+      font-size: 6.5rem;
+      opacity: 0.12;
+      pointer-events: none;
+      transform: rotate(15deg);
+    }
+
+    .inicio-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(4px);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .inicio-hero-badge .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #4ade80;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.85);
+      }
+    }
+
+    .inicio-hero-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+
+    .inicio-hero-subtitle {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.88);
+      margin-bottom: 16px;
+      max-width: 580px;
+      line-height: 1.45;
+    }
+
+    .inicio-stats-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .inicio-stat-pill {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 5px 12px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* GRID DE BOTÕES PROPORCIONAIS */
+    .inicio-actions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .inicio-actions-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    .inicio-action-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 230px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+      user-select: none;
+    }
+
+    .inicio-action-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 24px -4px rgba(13, 138, 114, 0.14), 0 6px 12px -3px rgba(0, 0, 0, 0.04);
+      border-color: #cbd5e1;
+    }
+
+    .inicio-action-card:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.08);
+    }
+
+    .inicio-card-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 14px;
+      transition: transform 0.2s ease;
+    }
+
+    .inicio-action-card:hover .inicio-card-icon-box {
+      transform: scale(1.08);
+    }
+
+    .inicio-icon-manut {
+      background-color: #fff1f2;
+      border: 1px solid #fecdd3;
+    }
+
+    .inicio-icon-mapa {
+      background-color: #f0f9ff;
+      border: 1px solid #bae6fd;
+    }
+
+    .inicio-icon-hist {
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+
+    .inicio-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+
+    .inicio-card-desc {
+      font-size: 0.82rem;
+      color: #64748b;
+      line-height: 1.45;
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .inicio-card-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .inicio-btn-arrow {
+      font-size: 0.95rem;
+      transition: transform 0.2s ease;
+    }
+
+    .inicio-action-card:hover .inicio-btn-arrow {
+      transform: translateX(4px);
+    }
+
+    .inicio-btn-manut {
+      background-color: #fff1f2;
+      color: #be123c;
+    }
+
+    .inicio-action-card:hover .inicio-btn-manut {
+      background-color: #be123c;
+      color: #ffffff;
+    }
+
+    .inicio-btn-mapa {
+      background-color: #f0f9ff;
+      color: #0284c7;
+    }
+
+    .inicio-action-card:hover .inicio-btn-mapa {
+      background-color: #0284c7;
+      color: #ffffff;
+    }
+
+    .inicio-btn-hist {
+      background-color: #f0fdf4;
+      color: #15803d;
+    }
+
+    .inicio-action-card:hover .inicio-btn-hist {
+      background-color: #15803d;
+      color: #ffffff;
+    }
+
+    .inicio-info-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px;
     }
 
     /* TÍTULO E BOTÃO FECHAR MAPA */
@@ -327,35 +572,77 @@
   <div class="header">👷‍♂️ App Operador - ETA Pirapama</div>
 
   <!-- TELA INÍCIO -->
-  <div id="tela-inicio" class="screen">
-    <div class="text-center mt-3 mb-4">
-      <div style="font-size: 3rem;">⚙️</div>
-      <h2 class="fw-bolder" style="font-size: 1.4rem;">Operação de Atuadores</h2>
-      <h5 class="text-muted" style="font-size: 0.95rem;">Painel de Acesso Rápido</h5>
-    </div>
-    <div class="row row-cols-1 g-3">
-      <div class="col">
-        <div class="card h-100 text-center p-4 border rounded-3" style="cursor:pointer;"
+  <div id="tela-inicio" class="screen active-screen">
+    <div class="inicio-container">
+      <div class="inicio-hero-card">
+        <div class="inicio-hero-badge">
+          <span class="status-dot"></span>
+          <span>Sistema Ativo • ETA Pirapama</span>
+        </div>
+        <h1 class="inicio-hero-title">Operação de Atuadores</h1>
+        <p class="inicio-hero-subtitle">
+          Painel central do operador para monitoramento de válvulas, acompanhamento dos 16 filtros e abertura rápida de
+          chamados.
+        </p>
+        <div class="inicio-stats-strip">
+          <div class="inicio-stat-pill"><span>🏭</span><span>ETA Pirapama</span></div>
+          <div class="inicio-stat-pill"><span>⚡</span><span>16 Filtros (Alas E/D)</span></div>
+          <div class="inicio-stat-pill"><span>⚙️</span><span>80 Atuadores</span></div>
+        </div>
+      </div>
+
+      <div class="inicio-actions-grid">
+        <div class="inicio-action-card"
           onclick="mudar('tela-manutencao', document.getElementById('btn-nav-tela-manutencao'))">
-          <div class="fs-1 mb-2">🛠️</div>
-          <div class="fw-bold fs-5">Solicitar Manutenção</div>
-          <div class="text-muted small">Abertura de chamados e relatórios de falha</div>
+          <div>
+            <div class="inicio-card-icon-box inicio-icon-manut">🛠️</div>
+            <div class="inicio-card-title">Solicitar Manutenção</div>
+            <div class="inicio-card-desc">Abertura de chamados técnicos, registro de falhas e exportação rápida para o
+              WhatsApp.</div>
+          </div>
+          <div class="inicio-card-btn inicio-btn-manut">
+            <span>Abrir Chamado</span><span class="inicio-btn-arrow">➔</span>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row row-cols-2 g-3 mt-1">
-      <div class="col">
-        <div class="card h-100 text-center p-3 border rounded-3" style="cursor:pointer;"
-          onclick="mudar('tela-mapa', document.getElementById('btn-nav-tela-mapa'))">
-          <div class="fs-1 mb-2">🗺️</div>
-          <div class="fw-bold" style="font-size:0.95rem;">Mapa Planta</div>
+        <div class="inicio-action-card" onclick="mudar('tela-mapa', document.getElementById('btn-nav-tela-mapa'))">
+          <div>
+            <div class="inicio-card-icon-box inicio-icon-mapa">🗺️</div>
+            <div class="inicio-card-title">Mapa da Planta</div>
+            <div class="inicio-card-desc">Visualização sinóptica dos filtros com status operacional em tempo real de
+              cada atuador.</div>
+          </div>
+          <div class="inicio-card-btn inicio-btn-mapa">
+            <span>Acessar Mapa</span><span class="inicio-btn-arrow">➔</span>
+          </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="card h-100 text-center p-3 border rounded-3" style="cursor:pointer;"
+        <div class="inicio-action-card"
           onclick="mudar('tela-historico-os', document.getElementById('btn-nav-tela-historico'))">
-          <div class="fs-1 mb-2">📜</div>
-          <div class="fw-bold" style="font-size:0.95rem;">Histórico OS</div>
+          <div>
+            <div class="inicio-card-icon-box inicio-icon-hist">📜</div>
+            <div class="inicio-card-title">Histórico de OS</div>
+            <div class="inicio-card-desc">Consulta detalhada de ordens de serviço executadas, equipes, filtros e
+              manutenções.</div>
+          </div>
+          <div class="inicio-card-btn inicio-btn-hist">
+            <span>Ver Histórico</span><span class="inicio-btn-arrow">➔</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="inicio-info-box mt-3">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span style="font-size: 1.1rem;">ℹ️</span>
+          <strong style="font-size: 0.88rem; color: #334155;">Estrutura da Galeria de Filtros</strong>
+        </div>
+        <div class="row g-2 text-muted" style="font-size: 0.8rem;">
+          <div class="col-12 col-md-6">
+            <div class="p-2 rounded bg-light border"><strong class="text-dark">Ala Esquerda:</strong> Filtros 01 ao 08
+              (Entrada, Descarga, Soprador, Lavagem, Filtrada)</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="p-2 rounded bg-light border"><strong class="text-dark">Ala Direita:</strong> Filtros 09 ao 16
+              (Entrada, Descarga, Soprador, Lavagem, Filtrada)</div>
+          </div>
         </div>
       </div>
     </div>
@@ -367,7 +654,6 @@
     <div class="card p-3 border rounded-3">
       <h5 class="fw-bold mb-3">🛠️ Solicitar Manutenção</h5>
       <form id="form-manutencao" onsubmit="enviarManutencao(event)">
-        <!-- NOVOS CAMPOS: NOME DO OPERADOR E UNIDADE -->
         <div class="mb-3">
           <label class="form-label fw-bold text-primary">Nome Operador</label>
           <input type="text" id="manut-operador" class="form-control" placeholder="Escreva o seu nome" required>
@@ -377,14 +663,11 @@
           <input type="text" id="manut-unidade" class="form-control bg-light" value="ETA PIRAPAMA" readonly>
         </div>
         <hr>
-
         <div class="mb-3">
           <label class="form-label fw-bold">1. Filtro</label>
           <select id="manut-filtro" class="form-select" onchange="atualizarModeloManutencao()" required>
             <option value="" selected disabled>Selecione o filtro...</option>
-            <script>
-              for (let i = 1; i <= 16; i++) document.write(`<option value="${i}">Filtro ${(i < 10 ? '0' : '') + i}</option>`);
-            </script>
+            <script>for (let i = 1; i <= 16; i++) document.write(`<option value="${i}">Filtro ${(i < 10 ? '0' : '') + i}</option>`);</script>
           </select>
         </div>
         <div class="mb-3">
@@ -414,7 +697,6 @@
           <input type="file" id="manut-foto" class="form-control" accept="image/*,video/*">
         </div>
         <button type="submit" class="btn btn-primary w-100 fw-bold p-2 mb-2">Enviar Solicitação</button>
-        <!-- BOTÃO EXPORTAR WHATSAPP -->
         <button type="button" class="btn btn-success w-100 fw-bold p-2" onclick="exportarParaWhatsapp()">
           <span style="font-size:1.1rem;">📱</span> Exportar para o Zap
         </button>
@@ -423,13 +705,11 @@
   </div>
 
   <!-- TELA MAPA PLANTA -->
-  <div id="tela-mapa" class="screen active-screen">
+  <div id="tela-mapa" class="screen">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4 class="fw-bold m-0 text-dark">🗺️ Mapa Visual</h4>
       <button class="btn-mapa-close" onclick="voltarInicio()">✕</button>
     </div>
-
-    <!-- CONTROLE DE VISTA COM LEGENDA INCLUÍDA -->
     <div class="mapa-control-card">
       <div class="row align-items-center">
         <div class="col-12 col-md-6 mb-2 mb-md-0">
@@ -442,18 +722,16 @@
         <div class="col-12 col-md-6 d-flex justify-content-md-end justify-content-center flex-wrap gap-2 mt-2 mt-md-0"
           style="font-size: 0.75rem; font-weight: 600; color: #475569;">
           <span class="d-flex align-items-center"><span
-              style="display:inline-block; width:12px; height:12px; background-color: var(--btn-green); margin-right:4px; border-radius:2px;"></span>
-            OK / Operação</span>
+              style="display:inline-block; width:12px; height:12px; background-color: var(--btn-green); margin-right:4px; border-radius:2px;"></span>OK
+            / Operação</span>
           <span class="d-flex align-items-center"><span
-              style="display:inline-block; width:12px; height:12px; background-color: var(--btn-red); margin-right:4px; border-radius:2px;"></span>
-            Parado</span>
+              style="display:inline-block; width:12px; height:12px; background-color: var(--btn-red); margin-right:4px; border-radius:2px;"></span>Parado</span>
           <span class="d-flex align-items-center"><span
-              style="display:inline-block; width:12px; height:12px; background-color: var(--btn-blue); margin-right:4px; border-radius:2px;"></span>
-            Removido / Obra</span>
+              style="display:inline-block; width:12px; height:12px; background-color: var(--btn-blue); margin-right:4px; border-radius:2px;"></span>Removido
+            / Obra</span>
         </div>
       </div>
     </div>
-
     <div class="row g-3">
       <div class="col-12 col-md-6">
         <div class="mapa-ala-title">ALA ESQUERDA (1 ao 8)</div>
@@ -466,7 +744,7 @@
     </div>
   </div>
 
-  <!-- MODAL DE DETALHES DO ATUADOR (FORMATO GESTÃO) -->
+  <!-- MODAL DE DETALHES -->
   <div id="modal-detalhes-atuador-mapa" class="modal-overlay-mapa" style="display: none;"
     onclick="fecharModalOverlayClick(event)">
     <div class="modal-box-detalhes" onclick="event.stopPropagation()">
@@ -475,7 +753,6 @@
         <button class="btn-close btn-close-white" onclick="fecharModalDetalhesAtuador()"></button>
       </div>
       <div class="p-3">
-
         <div class="box-tag-info d-flex align-items-center mb-3">
           <img src="https://via.placeholder.com/60?text=Sem+Foto" id="modal-atuador-imagem"
             style="width: 65px; height: 65px; object-fit: cover; border-radius: 8px; margin-right: 14px; border: 1px solid #cbd5e1;">
@@ -484,33 +761,22 @@
             <div class="small text-muted" id="modal-atuador-posicao-sub">Posição Descarga</div>
           </div>
         </div>
-
         <div class="box-detalhes-lista">
-          <div class="item-row">
-            <strong class="text-dark">Status Geral:</strong>
-            <span id="modal-atuador-status-badge" class="badge-status-ok">OK / Operação</span>
-          </div>
-          <div class="item-row">
-            <strong class="text-dark">Modelo:</strong>
-            <span id="modal-atuador-modelo" class="text-muted">CSR25M</span>
-          </div>
-          <div class="item-row">
-            <strong class="text-dark">Série:</strong>
-            <span id="modal-atuador-serie" class="text-muted">48983</span>
-          </div>
-          <div class="item-row flex-column align-items-start">
-            <strong class="text-dark mb-1">Último Serviço:</strong>
-            <span id="modal-atuador-ultimo-servico" class="text-muted small">Nenhuma OS recente</span>
-          </div>
-          <div class="item-row flex-column align-items-start border-0">
-            <strong class="text-dark mb-1">Obs do Equipamento:</strong>
-            <span id="modal-atuador-obs" class="text-muted small">Nenhuma observação registrada.</span>
-          </div>
+          <div class="item-row"><strong class="text-dark">Status Geral:</strong><span id="modal-atuador-status-badge"
+              class="badge-status-ok">OK / Operação</span></div>
+          <div class="item-row"><strong class="text-dark">Modelo:</strong><span id="modal-atuador-modelo"
+              class="text-muted">CSR25M</span></div>
+          <div class="item-row"><strong class="text-dark">Série:</strong><span id="modal-atuador-serie"
+              class="text-muted">48983</span></div>
+          <div class="item-row flex-column align-items-start"><strong class="text-dark mb-1">Último
+              Serviço:</strong><span id="modal-atuador-ultimo-servico" class="text-muted small">Nenhuma OS
+              recente</span></div>
+          <div class="item-row flex-column align-items-start border-0"><strong class="text-dark mb-1">Obs do
+              Equipamento:</strong><span id="modal-atuador-obs" class="text-muted small">Nenhuma observação
+              registrada.</span></div>
         </div>
-
-        <button class="btn-abrir-os" onclick="abrirChamadoDoMapa()">
-          <span style="font-size:1.1rem;">🛠️</span> Abrir Chamado (Preencher OS)
-        </button>
+        <button class="btn-abrir-os" onclick="abrirChamadoDoMapa()"><span style="font-size:1.1rem;">🛠️</span> Abrir
+          Chamado (Preencher OS)</button>
       </div>
     </div>
   </div>
@@ -519,19 +785,18 @@
   <div id="tela-historico-os" class="screen">
     <button class="btn-voltar" onclick="voltarInicio()">⬅️ Voltar</button>
     <h5 class="fw-bold mb-3">📜 Histórico de Manutenções (OS)</h5>
-
     <div class="card p-3 mb-3 border rounded-3">
       <div class="row g-2">
         <div class="col-6">
           <label class="form-label small fw-bold mb-1">Filtro</label>
-          <select id="filtro-hist-filtro" class="form-select form-select-sm" onchange="aplicarFiltrosHistorico()">
+          <select id="filtro-hist-filtro" class="form-select form-select-sm">
             <option value="">Todos</option>
             <script>for (let i = 1; i <= 16; i++) document.write(`<option value="${i}">Filtro ${i}</option>`);</script>
           </select>
         </div>
         <div class="col-6">
           <label class="form-label small fw-bold mb-1">Posição</label>
-          <select id="filtro-hist-posicao" class="form-select form-select-sm" onchange="aplicarFiltrosHistorico()">
+          <select id="filtro-hist-posicao" class="form-select form-select-sm">
             <option value="">Todas</option>
             <option value="Entrada">Entrada</option>
             <option value="Descarga">Descarga</option>
@@ -542,38 +807,44 @@
         </div>
         <div class="col-6">
           <label class="form-label small fw-bold mb-1">Nº da OS</label>
-          <select id="filtro-hist-os" class="form-select form-select-sm" onchange="aplicarFiltrosHistorico()">
+          <select id="filtro-hist-os" class="form-select form-select-sm">
             <option value="">Todas</option>
           </select>
         </div>
         <div class="col-6">
           <label class="form-label small fw-bold mb-1">Equipe / Nº 2</label>
-          <select id="filtro-hist-num2" class="form-select form-select-sm" onchange="aplicarFiltrosHistorico()">
+          <select id="filtro-hist-num2" class="form-select form-select-sm">
             <option value="">Todas</option>
           </select>
         </div>
+        <div class="col-12 mt-3">
+          <button class="btn btn-primary w-100 fw-bold p-2" onclick="aplicarFiltrosHistorico()">🔍 Buscar
+            Histórico</button>
+        </div>
       </div>
     </div>
-
     <div id="lista-historico-os"></div>
   </div>
 
   <!-- NAVEGAÇÃO INFERIOR -->
   <div class="nav-bottom">
-    <button class="nav-item" id="btn-nav-tela-inicio" onclick="mudar('tela-inicio', this)"><span
+    <button class="nav-item active" id="btn-nav-tela-inicio" onclick="mudar('tela-inicio', this)"><span
         class="nav-icon">🏠</span>Início</button>
     <button class="nav-item" id="btn-nav-tela-manutencao" onclick="mudar('tela-manutencao', this)"><span
         class="nav-icon">🛠️</span>Manutenção</button>
-    <button class="nav-item active" id="btn-nav-tela-mapa" onclick="mudar('tela-mapa', this)"><span
+    <button class="nav-item" id="btn-nav-tela-mapa" onclick="mudar('tela-mapa', this)"><span
         class="nav-icon">🗺️</span>Mapa</button>
     <button class="nav-item" id="btn-nav-tela-historico" onclick="mudar('tela-historico-os', this)"><span
         class="nav-icon">📜</span>Histórico</button>
   </div>
 
   <script>
-    // CONFIGURAÇÃO SUPABASE
+    // --- CORREÇÕES APLICADAS AQUI NAS CHAVES E URL ---
+    // A URL deve ser a BASE do projeto (sem o /rest/v1/)
     const SUPABASE_URL = 'https://foctlpygsbrxrrrphkah.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInRefiI6ImZvY3RscHlnc2JyeHJycnBoa2FoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzMDI2OTAsImV4cCI6MjEwMzg3ODY5MH0.XOdcn0vyysYXGJqijQ80JijkY2U4t4nL5tBsDXDeOZc';
+    // Chave corrigida enviada agora
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvY3RscHlnc2JyeHJycnBoa2FoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzMDI2OTAsImV4cCI6MjEwMzg3ODY5MH0.XOdcn0vyysYXGJqijQ80JijkY2U4t4nL5tBsDXDeOZc';
+
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let atuadorSelecionadoModal = null;
@@ -582,15 +853,21 @@
     const ServicoDB = {
       async obterTodosAtuadores() {
         const { data, error } = await _supabase.from('banco_dados').select('*').order('id', { ascending: true });
-        if (error) console.error(error); return data || [];
+        if (error) console.error("Erro banco_dados:", error);
+        return data || [];
       },
       async buscarDadosAtuador(filtro, posicao) {
         const { data, error } = await _supabase.from('banco_dados').select('*').eq('filtro', parseInt(filtro, 10)).eq('posicao_atuador', posicao).maybeSingle();
-        if (error) console.error(error); return data;
+        if (error) console.error("Erro buscarDadosAtuador:", error);
+        return data;
       },
       async obterHistoricoOSGeral() {
         const { data, error } = await _supabase.from('bd_manutencao').select('*').order('id', { ascending: false });
-        if (error) console.error(error); return data || [];
+        if (error) {
+          console.error("ERRO DO SUPABASE:", error);
+          alert("Erro de permissão! Verifique se a tabela 'bd_manutencao' está com RLS desativado ou as políticas configuradas.");
+        }
+        return data || [];
       }
     };
 
@@ -625,37 +902,22 @@
       e.preventDefault();
       alert("Solicitação registrada com sucesso!");
       document.getElementById('form-manutencao').reset();
-      document.getElementById('manut-unidade').value = 'ETA PIRAPAMA'; // restaura
+      document.getElementById('manut-unidade').value = 'ETA PIRAPAMA';
       voltarInicio();
     }
 
-    // NOVA FUNÇÃO: Exportar para WhatsApp
     function exportarParaWhatsapp() {
       const operador = document.getElementById('manut-operador').value.trim() || 'Não informado';
       const unidade = document.getElementById('manut-unidade').value;
-
       const selectFiltro = document.getElementById('manut-filtro');
       const filtro = selectFiltro.options[selectFiltro.selectedIndex]?.text || '-';
-
       const selectPosicao = document.getElementById('manut-posicao');
       const posicao = selectPosicao.options[selectPosicao.selectedIndex]?.text || '-';
-
       const modelo = document.getElementById('manut-modelo').value || '-';
       const descricao = document.getElementById('manut-descricao').value.trim() || 'Nenhuma descrição fornecida';
-
       const dataCriacao = new Date().toLocaleDateString('pt-BR');
-
-      const msg = `*SOLICITAÇÃO DE MANUTENÇÃO DOS ATUADORES*\n` +
-        `*DATA*: ${dataCriacao}\n` +
-        `*UNIDADE*: ${unidade}\n` +
-        `*OPERADOR*: ${operador}\n` +
-        `*Filtro*: ${filtro}\n` +
-        `*Posição*: ${posicao}\n` +
-        `*Modelo*: ${modelo}\n` +
-        `*Descrição do problema*:\n${descricao}`;
-
-      const linkWa = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
-      window.open(linkWa, '_blank');
+      const msg = `*SOLICITAÇÃO DE MANUTENÇÃO DOS ATUADORES*\n*DATA*: ${dataCriacao}\n*UNIDADE*: ${unidade}\n*OPERADOR*: ${operador}\n*Filtro*: ${filtro}\n*Posição*: ${posicao}\n*Modelo*: ${modelo}\n*Descrição do problema*:\n${descricao}`;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     async function carregarMapaApp() {
@@ -664,39 +926,29 @@
       const esqDiv = document.getElementById('mapa-ala-esquerda');
       const dirDiv = document.getElementById('mapa-ala-direita');
       esqDiv.innerHTML = ''; dirDiv.innerHTML = '';
-
       const posicoes = tipoVista === 'superior' ? ['Entrada', 'Descarga'] : ['Soprador', 'Lavagem', 'Filtrada'];
-
       for (let f = 1; f <= 16; f++) {
         const card = document.createElement('div');
         card.className = 'mapa-filtro-card';
         card.innerHTML = `<div class="mapa-filtro-header">FILTRO ${(f < 10 ? '0' + f : f)}</div>`;
         const grid = document.createElement('div');
         grid.className = posicoes.length === 2 ? 'mapa-atuadores-grid-2' : 'mapa-atuadores-grid-3';
-
         posicoes.forEach(pos => {
           const item = todos.find(a => Number(a.filtro) === f && a.posicao_atuador === pos);
           const btn = document.createElement('button');
-          let bgClass = 'btn-mapa-verde'; // Default (OK / Operação)
-
+          let bgClass = 'btn-mapa-verde';
           if (item) {
             const st = (item.status_geral || '').toLowerCase();
-            if (st.includes('parado') || item.estado_eletrico === 'Parado' || item.estado_mecanico === 'Parado') {
-              bgClass = 'btn-mapa-vermelho';
-            } else if (st.includes('removido') || st.includes('obra')) {
-              bgClass = 'btn-mapa-azul';
-            }
+            if (st.includes('parado') || item.estado_eletrico === 'Parado' || item.estado_mecanico === 'Parado') bgClass = 'btn-mapa-vermelho';
+            else if (st.includes('removido') || st.includes('obra')) bgClass = 'btn-mapa-azul';
           }
-
           btn.className = `btn-atuador-mapa ${bgClass}`;
-
           let label = pos.substring(0, 4).toUpperCase();
           if (pos === 'Descarga') label = 'DESC';
           if (pos === 'Entrada') label = 'ENTR';
           if (pos === 'Soprador') label = 'SOPR';
           if (pos === 'Lavagem') label = 'LAVA';
           if (pos === 'Filtrada') label = 'FILT';
-
           btn.innerText = label;
           btn.onclick = () => abrirModalDetalhesMapa(f, pos, item);
           grid.appendChild(btn);
@@ -711,49 +963,50 @@
     function abrirModalDetalhesMapa(filtro, posicao, dado) {
       atuadorSelecionadoModal = { filtro, posicao };
       document.getElementById('modal-atuador-titulo').innerText = `Filtro ${filtro} - ${posicao}`;
-
       let siglaPos = 'DES';
       if (posicao === 'Entrada') siglaPos = 'ENT';
       if (posicao === 'Descarga') siglaPos = 'DES';
       if (posicao === 'Soprador') siglaPos = 'SOP';
       if (posicao === 'Lavagem') siglaPos = 'LAV';
       if (posicao === 'Filtrada') siglaPos = 'FIL';
-
       let fStr = (filtro < 10 ? '0' + filtro : filtro);
       document.getElementById('modal-atuador-codigo-tag').innerText = `FIL_${siglaPos}_${fStr}`;
       document.getElementById('modal-atuador-posicao-sub').innerText = `Posição ${posicao}`;
 
-      // Detalhes extras no Modal
       document.getElementById('modal-atuador-modelo').innerText = dado ? (dado.modelo_atuador || 'CSR25M') : 'CSR25M';
       document.getElementById('modal-atuador-serie').innerText = dado ? (dado.N_serie_atuador || '48983') : '48983';
       document.getElementById('modal-atuador-obs').innerText = dado ? (dado.obs_equipamento || 'Nenhuma observação registrada.') : 'Nenhuma observação registrada.';
       document.getElementById('modal-atuador-ultimo-servico').innerText = dado ? (dado.ultimo_servico || 'Nenhuma OS recente') : 'Nenhuma OS recente';
 
-      // Definir Imagem (Placeholder padrão se não existir via BD)
       const imgModal = document.getElementById('modal-atuador-imagem');
-      imgModal.src = (dado && dado.imagem) ? dado.imagem : 'https://via.placeholder.com/60?text=Sem+Foto';
+      let srcImagem = 'https://via.placeholder.com/60?text=Sem+Foto';
+      if (dado && dado.imagem) {
+        srcImagem = dado.imagem;
+      } else {
+        const p = posicao.toLowerCase();
+        if (p === 'entrada') srcImagem = 'img/entrada.jpeg';
+        else if (p === 'descarga') srcImagem = 'img/descarga.jpeg';
+        else if (p === 'filtrada') srcImagem = 'img/filtrada_mini.jpeg';
+        else if (p === 'lavagem') srcImagem = 'img/lavagem_mini.jpeg';
+        else if (p === 'soprador') srcImagem = 'img/soprador_mini.jpeg';
+      }
+      imgModal.src = srcImagem;
 
-      // Status Badge (Cor visual do modal)
       const badge = document.getElementById('modal-atuador-status-badge');
       let statusText = 'OK / Operação';
       let badgeClass = 'badge-status-ok';
-
       if (dado) {
         const st = (dado.status_geral || '').toLowerCase();
         if (st.includes('parado') || dado.estado_eletrico === 'Parado' || dado.estado_mecanico === 'Parado') {
-          statusText = 'Parado';
-          badgeClass = 'badge-status-falha';
+          statusText = 'Parado'; badgeClass = 'badge-status-falha';
         } else if (st.includes('removido') || st.includes('obra')) {
-          statusText = dado.status_geral || 'Removido / Obra';
-          badgeClass = 'badge-status-azul';
+          statusText = dado.status_geral || 'Removido / Obra'; badgeClass = 'badge-status-azul';
         } else {
           statusText = dado.status_geral || 'OK / Operação';
         }
       }
-
       badge.className = badgeClass;
       badge.innerText = statusText;
-
       document.getElementById('modal-detalhes-atuador-mapa').style.display = 'flex';
     }
 
@@ -777,11 +1030,11 @@
       historicoDataGlobal = await ServicoDB.obterHistoricoOSGeral();
 
       const selectOs = document.getElementById('filtro-hist-os');
-      const osUnicos = [...new Set(historicoDataGlobal.map(h => h.numero_OS).filter(Boolean))];
+      const osUnicos = [...new Set(historicoDataGlobal.map(h => h.numero_os).filter(val => val !== null && val !== undefined))];
       selectOs.innerHTML = '<option value="">Todas</option>' + osUnicos.map(os => `<option value="${os}">${os}</option>`).join('');
 
       const selectNum2 = document.getElementById('filtro-hist-num2');
-      const num2Unicos = [...new Set(historicoDataGlobal.map(h => h.numero_2 || h.equipe).filter(Boolean))];
+      const num2Unicos = [...new Set(historicoDataGlobal.map(h => h.equipe).filter(val => val !== null && val !== undefined))];
       selectNum2.innerHTML = '<option value="">Todas</option>' + num2Unicos.map(n2 => `<option value="${n2}">${n2}</option>`).join('');
 
       aplicarFiltrosHistorico();
@@ -794,10 +1047,16 @@
       const valNum2 = document.getElementById('filtro-hist-num2').value;
 
       const dadosFiltrados = historicoDataGlobal.filter(h => {
-        const matchFiltro = valFiltro === "" || String(h.filtro) === valFiltro;
-        const matchPosicao = valPosicao === "" || h.posicao === valPosicao;
-        const matchOs = valOs === "" || String(h.numero_OS) === valOs;
-        const matchNum2 = valNum2 === "" || String(h.numero_2 || h.equipe) === valNum2;
+        const dbFiltroStr = h.filtro !== null && h.filtro !== undefined ? String(h.filtro) : "";
+        const dbOsStr = h.numero_os !== null && h.numero_os !== undefined ? String(h.numero_os) : "";
+        const dbEquipeStr = h.equipe !== null && h.equipe !== undefined ? String(h.equipe) : "";
+        const dbPosicaoStr = h.posicao !== null && h.posicao !== undefined ? String(h.posicao) : "";
+
+        const matchFiltro = valFiltro === "" || dbFiltroStr === valFiltro;
+        const matchPosicao = valPosicao === "" || dbPosicaoStr === valPosicao;
+        const matchOs = valOs === "" || dbOsStr === valOs;
+        const matchNum2 = valNum2 === "" || dbEquipeStr === valNum2;
+
         return matchFiltro && matchPosicao && matchOs && matchNum2;
       });
 
@@ -807,24 +1066,29 @@
     function renderizarListaHistorico(dados) {
       const container = document.getElementById('lista-historico-os');
       let html = '';
+      if (dados.length === 0) {
+        container.innerHTML = '<div class="alert alert-info">Nenhum histórico encontrado para os filtros selecionados.</div>';
+        return;
+      }
       dados.forEach(h => {
         html += `
           <div class="card p-3 mb-2 border rounded-3">
             <div class="d-flex justify-content-between">
-              <span class="badge bg-primary">OS ${h.numero_OS || 'S/N'}</span>
+              <span class="badge bg-primary">OS ${h.numero_os || 'S/N'}</span>
               <small class="text-muted">${h.data_hora || '-'}</small>
             </div>
-            <div class="fw-bold mt-2">Filtro ${h.filtro} - ${h.posicao}</div>
-            <div class="small text-secondary mt-1">${h.descricao || h.servico || '-'}</div>
-            ${(h.equipe || h.numero_2) ? `<div class="small fw-bold text-dark mt-2">Equipe: ${h.equipe || h.numero_2}</div>` : ''}
+            <div class="fw-bold mt-2">Filtro ${h.filtro || '-'} - ${h.posicao || '-'}</div>
+            <div class="small text-secondary mt-1"><strong>Serviço:</strong> ${h.servico || '-'}</div>
+            <div class="small text-secondary mt-1"><strong>Descrição:</strong> ${h.descricao || '-'}</div>
+            ${(h.equipe) ? `<div class="small fw-bold text-dark mt-2">Equipe: ${h.equipe}</div>` : ''}
           </div>
         `;
       });
-      container.innerHTML = html || '<div class="alert alert-info">Nenhum histórico encontrado para os filtros selecionados.</div>';
+      container.innerHTML = html;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      carregarMapaApp();
+      // Init
     });
   </script>
 </body>
