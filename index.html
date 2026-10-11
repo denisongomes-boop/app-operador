@@ -627,6 +627,16 @@
             <span>Ver Histórico</span><span class="inicio-btn-arrow">➔</span>
           </div>
         </div>
+        <div class="inicio-action-card" onclick="mudar('tela-pendencias', document.getElementById('btn-nav-tela-pendencias'))">
+          <div>
+            <div class="inicio-card-icon-box" style="background: linear-gradient(135deg,#dc3545,#c82333);">⚠️</div>
+            <div class="inicio-card-title">Pendências</div>
+            <div class="inicio-card-desc">Acompanhe as pendências técnicas abertas pela equipe de manutenção nos atuadores.</div>
+          </div>
+          <div class="inicio-card-btn" style="background: linear-gradient(90deg,#dc3545,#c82333); color:#fff;">
+            <span>Ver Pendências</span><span class="inicio-btn-arrow">➔</span>
+          </div>
+        </div>
       </div>
 
       <div class="inicio-info-box mt-3">
@@ -826,6 +836,31 @@
     <div id="lista-historico-os"></div>
   </div>
 
+  <!-- TELA PENDÊNCIAS -->
+  <div id="tela-pendencias" class="screen">
+    <button class="btn-voltar" onclick="voltarInicio()">⬅️ Voltar</button>
+    <h5 class="fw-bold mb-3" style="color:#dc3545;">⚠️ Pendências Técnicas</h5>
+    <div class="card p-3 mb-3 border rounded-3">
+      <div class="row g-2">
+        <div class="col-6">
+          <label class="form-label small fw-bold mb-1">Filtro</label>
+          <select id="filtro-pend-filtro" class="form-select form-select-sm" onchange="carregarPendenciasOperador()">
+            <option value="">Todos</option>
+            <script>for(let i=1;i<=16;i++) document.write(`<option value="${i}">Filtro ${i}</option>`);</script>
+          </select>
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-bold mb-1">Status</label>
+          <select id="filtro-pend-status" class="form-select form-select-sm" onchange="carregarPendenciasOperador()">
+            <option value="abertas">Abertas</option>
+            <option value="todas">Todas</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="container-pendencias-operador"></div>
+  </div>
+
   <!-- NAVEGAÇÃO INFERIOR -->
   <div class="nav-bottom">
     <button class="nav-item active" id="btn-nav-tela-inicio" onclick="mudar('tela-inicio', this)"><span
@@ -834,6 +869,8 @@
         class="nav-icon">🛠️</span>Manutenção</button>
     <button class="nav-item" id="btn-nav-tela-mapa" onclick="mudar('tela-mapa', this)"><span
         class="nav-icon">🗺️</span>Mapa</button>
+    <button class="nav-item" id="btn-nav-tela-pendencias" onclick="mudar('tela-pendencias', this)"><span
+        class="nav-icon">⚠️</span>Pendências</button>
     <button class="nav-item" id="btn-nav-tela-historico" onclick="mudar('tela-historico-os', this)"><span
         class="nav-icon">📜</span>Histórico</button>
   </div>
@@ -868,6 +905,11 @@
           alert("Erro de permissão! Verifique se a tabela 'bd_manutencao' está com RLS desativado ou as políticas configuradas.");
         }
         return data || [];
+      },
+      async obterPendencias() {
+        const { data, error } = await _supabase.from('pendencia').select('*').order('id', { ascending: false });
+        if (error) console.error("Erro pendencias:", error);
+        return data || [];
       }
     };
 
@@ -877,8 +919,9 @@
       const target = document.getElementById(id);
       if (target) target.classList.add('active-screen');
       if (btn) btn.classList.add('active');
-      if (id === 'tela-mapa') carregarMapaApp();
+      if (id === 'tela-mapa') { carregarMapaApp(); iniciarPollingMapa(); } else { pararPollingMapa(); }
       if (id === 'tela-historico-os') inicializarHistoricoOS();
+      if (id === 'tela-pendencias') carregarPendenciasOperador();
       window.scrollTo(0, 0);
     }
 
@@ -900,10 +943,38 @@
 
     async function enviarManutencao(e) {
       e.preventDefault();
-      alert("Solicitação registrada com sucesso!");
-      document.getElementById('form-manutencao').reset();
-      document.getElementById('manut-unidade').value = 'ETA PIRAPAMA';
-      voltarInicio();
+      const solicitante = document.getElementById('manut-operador').value.trim();
+      const unidade = document.getElementById('manut-unidade').value;
+      const filtro = document.getElementById('manut-filtro').value;
+      const posicao = document.getElementById('manut-posicao').value;
+      const modelo = document.getElementById('manut-modelo').value;
+      const descricao = document.getElementById('manut-descricao').value.trim();
+
+      if (!solicitante || !filtro || !posicao || !descricao) {
+        alert('Preencha todos os campos obrigatórios.');
+        return;
+      }
+
+      try {
+        const { error } = await _supabase.from('solicitacoes_operador').insert({
+          solicitante,
+          unidade,
+          filtro,
+          posicao,
+          modelo,
+          descricao,
+          status: 'Pendente',
+          created_at: new Date().toISOString()
+        });
+        if (error) throw error;
+        alert('Solicitação enviada com sucesso! A equipe de manutenção foi notificada.');
+        document.getElementById('form-manutencao').reset();
+        document.getElementById('manut-unidade').value = 'ETA PIRAPAMA';
+        voltarInicio();
+      } catch (err) {
+        console.error('Erro ao enviar solicitação:', err);
+        alert('Erro ao enviar solicitação. Verifique sua conexão e tente novamente.');
+      }
     }
 
     function exportarParaWhatsapp() {
@@ -938,7 +1009,7 @@
           const btn = document.createElement('button');
           let bgClass = 'btn-mapa-verde';
           if (item) {
-            const st = (item.status_geral || '').toLowerCase();
+            const st = (item.status_atual || '').toLowerCase();
             if (st.includes('parado') || item.estado_eletrico === 'Parado' || item.estado_mecanico === 'Parado') bgClass = 'btn-mapa-vermelho';
             else if (st.includes('removido') || st.includes('obra')) bgClass = 'btn-mapa-azul';
           }
@@ -996,13 +1067,13 @@
       let statusText = 'OK / Operação';
       let badgeClass = 'badge-status-ok';
       if (dado) {
-        const st = (dado.status_geral || '').toLowerCase();
+        const st = (dado.status_atual || '').toLowerCase();
         if (st.includes('parado') || dado.estado_eletrico === 'Parado' || dado.estado_mecanico === 'Parado') {
           statusText = 'Parado'; badgeClass = 'badge-status-falha';
         } else if (st.includes('removido') || st.includes('obra')) {
-          statusText = dado.status_geral || 'Removido / Obra'; badgeClass = 'badge-status-azul';
+          statusText = dado.status_atual || 'Removido / Obra'; badgeClass = 'badge-status-azul';
         } else {
-          statusText = dado.status_geral || 'OK / Operação';
+          statusText = dado.status_atual || 'OK / Operação';
         }
       }
       badge.className = badgeClass;
@@ -1085,6 +1156,68 @@
         `;
       });
       container.innerHTML = html;
+    }
+
+    let _pollingMapaInterval = null;
+    function iniciarPollingMapa() {
+      pararPollingMapa();
+      _pollingMapaInterval = setInterval(() => { carregarMapaApp(); }, 30000);
+    }
+    function pararPollingMapa() {
+      if (_pollingMapaInterval) { clearInterval(_pollingMapaInterval); _pollingMapaInterval = null; }
+    }
+
+    function formatarDataBR(raw) {
+      if (!raw) return '-';
+      try {
+        const d = new Date(raw);
+        if (isNaN(d.getTime())) return raw;
+        return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      } catch { return raw; }
+    }
+
+    async function carregarPendenciasOperador() {
+      const container = document.getElementById('container-pendencias-operador');
+      container.innerHTML = '<div class="text-center text-muted my-3">Carregando pendências...</div>';
+      try {
+        let lista = await ServicoDB.obterPendencias();
+        const filtroVal = document.getElementById('filtro-pend-filtro').value;
+        const statusVal = document.getElementById('filtro-pend-status').value;
+        if (filtroVal) lista = lista.filter(p => String(p.filtro) === filtroVal);
+        if (statusVal === 'abertas') lista = lista.filter(p => !p.status || p.status.toLowerCase() !== 'concluído');
+
+        if (lista.length === 0) {
+          container.innerHTML = '<div class="alert alert-success text-center">Nenhuma pendência encontrada.</div>';
+          return;
+        }
+
+        let html = '';
+        lista.forEach(p => {
+          const dt = formatarDataBR(p.data_criacao || p.created_at);
+          const desc = p.descricao_pendencia || p.descricao || 'Sem descrição';
+          const pos = p.posicao || p.posicao_atuador || 'Geral';
+          const st = p.status || 'Pendente';
+          const concluido = st.toLowerCase() === 'concluído';
+          const borderColor = concluido ? 'border-success' : 'border-danger';
+          const badgeClass = concluido ? 'bg-success' : 'bg-danger';
+          html += `
+            <div class="card p-3 mb-2 shadow-sm border-start border-4 ${borderColor}">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="fw-bold text-dark">Filtro ${p.filtro || '-'} - ${pos}</span>
+                <span class="badge ${badgeClass}">${st}</span>
+              </div>
+              <p class="small text-dark mb-2">${desc}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted small">${dt}</span>
+              </div>
+              ${p.resolucao ? `<div class="small text-success mt-1"><strong>Resolução:</strong> ${p.resolucao}</div>` : ''}
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      } catch (e) {
+        container.innerHTML = `<div class="alert alert-danger">Erro ao carregar pendências: ${e.message}</div>`;
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
