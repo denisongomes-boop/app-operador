@@ -3,8 +3,24 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>App Operador - ETA Pirapama</title>
+
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d8a72">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- iOS / Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Operador ETA">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <!-- Windows -->
+  <meta name="msapplication-TileColor" content="#0d8a72">
+  <meta name="msapplication-TileImage" content="icons/icon-192.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,20 +41,25 @@
       --btn-blue: #0b5ed7;
     }
 
+    *,*::before,*::after { box-sizing: border-box; }
+
     body {
       background-color: var(--bg-color);
       min-height: 100vh;
-      padding-bottom: 85px;
+      min-height: 100dvh;
+      padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
       font-family: 'Inter', sans-serif;
       color: var(--text-main);
       margin: 0;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-text-size-adjust: 100%;
     }
 
     /* HEADER SUPERIOR */
     .header {
       background-color: var(--header-bg);
       color: #ffffff;
-      padding: 12px 15px;
+      padding: calc(env(safe-area-inset-top, 0px) + 12px) 15px 12px;
       text-align: center;
       font-weight: 700;
       font-size: 1.05rem;
@@ -160,14 +181,21 @@
     /* GRID DE BOTÕES PROPORCIONAIS */
     .inicio-actions-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
 
-    @media (max-width: 768px) {
+    @media (min-width: 768px) {
+      .inicio-actions-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 400px) {
       .inicio-actions-grid {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 10px;
       }
     }
 
@@ -175,11 +203,11 @@
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 16px;
-      padding: 20px 18px;
+      padding: 16px 14px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 230px;
+      min-height: 180px;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
@@ -527,7 +555,7 @@
       background: #ffffff;
       display: flex;
       justify-content: space-around;
-      padding: 8px 0 10px 0;
+      padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px));
       border-top: 1px solid #e2e8f0;
       z-index: 1000;
     }
@@ -535,13 +563,16 @@
     .nav-item {
       border: none;
       background: none;
-      font-size: 11px;
+      font-size: 10px;
       color: #64748b;
       display: flex;
       flex-direction: column;
       align-items: center;
       flex: 1;
       font-weight: 600;
+      gap: 1px;
+      padding: 2px 0;
+      min-width: 0;
     }
 
     .nav-item.active {
@@ -549,8 +580,13 @@
     }
 
     .nav-icon {
-      font-size: 1.2rem;
-      margin-bottom: 2px;
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+
+    @media (min-width: 768px) {
+      .nav-item { font-size: 12px; }
+      .nav-icon { font-size: 1.3rem; }
     }
 
     .btn-voltar {
@@ -565,6 +601,75 @@
       align-items: center;
       gap: 6px;
     }
+
+    /* BANNER DE INSTALAÇÃO PWA */
+    .pwa-install-banner {
+      display: none;
+      background: linear-gradient(135deg, #0d8a72, #065345);
+      color: #fff;
+      padding: 12px 16px;
+      align-items: center;
+      gap: 12px;
+      position: fixed;
+      bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+      left: 12px;
+      right: 12px;
+      border-radius: 14px;
+      z-index: 1050;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      animation: slideUp 0.4s ease;
+    }
+    .pwa-install-banner.show { display: flex; }
+    @keyframes slideUp {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .pwa-install-banner img { width: 40px; height: 40px; border-radius: 10px; }
+    .pwa-install-info { flex: 1; min-width: 0; }
+    .pwa-install-info strong { display: block; font-size: 0.9rem; }
+    .pwa-install-info span { font-size: 0.75rem; opacity: 0.85; }
+    .pwa-install-btn {
+      background: #fff;
+      color: #0d8a72;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .pwa-install-close {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+
+    /* CONTAINER RESPONSIVO GERAL */
+    .screen { padding: 12px; }
+    @media (min-width: 768px) {
+      .screen { padding: 20px 24px; max-width: 960px; margin-left: auto; margin-right: auto; }
+    }
+    @media (min-width: 1200px) {
+      .screen { max-width: 1100px; }
+    }
+
+    /* MAPA RESPONSIVO EM TABLET/DESKTOP */
+    @media (min-width: 768px) {
+      .mapa-filtro-card { padding: 14px 18px; }
+      .btn-atuador-mapa { font-size: 0.85rem; padding: 12px 4px; }
+    }
+
+    /* FORMULÁRIOS RESPONSIVOS */
+    @media (min-width: 768px) {
+      #form-manutencao { max-width: 600px; }
+    }
+
+    /* SCROLL SUAVE */
+    html { scroll-behavior: smooth; }
   </style>
 </head>
 
@@ -859,6 +964,17 @@
       </div>
     </div>
     <div id="container-pendencias-operador"></div>
+  </div>
+
+  <!-- BANNER DE INSTALAÇÃO PWA -->
+  <div id="pwa-install-banner" class="pwa-install-banner">
+    <img src="icons/icon-192.png" alt="App">
+    <div class="pwa-install-info">
+      <strong>Instalar App Operador</strong>
+      <span>Acesso rápido na tela inicial</span>
+    </div>
+    <button class="pwa-install-btn" id="pwa-install-btn" onclick="instalarPWA()">Instalar</button>
+    <button class="pwa-install-close" onclick="fecharBannerPWA()">✕</button>
   </div>
 
   <!-- NAVEGAÇÃO INFERIOR -->
@@ -1220,8 +1336,55 @@
       }
     }
 
+    let _deferredPrompt = null;
+
+    function mostrarBannerPWA() {
+      const banner = document.getElementById('pwa-install-banner');
+      if (banner && !sessionStorage.getItem('pwa-banner-closed')) banner.classList.add('show');
+    }
+
+    function fecharBannerPWA() {
+      document.getElementById('pwa-install-banner').classList.remove('show');
+      sessionStorage.setItem('pwa-banner-closed', '1');
+    }
+
+    async function instalarPWA() {
+      if (_deferredPrompt) {
+        _deferredPrompt.prompt();
+        const { outcome } = await _deferredPrompt.userChoice;
+        if (outcome === 'accepted') fecharBannerPWA();
+        _deferredPrompt = null;
+      } else {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        if (isIOS) {
+          alert('Para instalar no iOS:\n\n1. Toque no botão de compartilhar (quadrado com seta)\n2. Role para baixo\n3. Toque em "Adicionar à Tela de Início"');
+        } else {
+          alert('Para instalar:\n\nAbra o menu do navegador (⋮) e selecione "Instalar aplicativo" ou "Adicionar à tela inicial".');
+        }
+        fecharBannerPWA();
+      }
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      _deferredPrompt = e;
+      mostrarBannerPWA();
+    });
+
+    window.addEventListener('appinstalled', () => {
+      fecharBannerPWA();
+      _deferredPrompt = null;
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
-      // Init
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+      }
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+      if (!isStandalone && !_deferredPrompt) {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        if (isIOS) setTimeout(mostrarBannerPWA, 3000);
+      }
     });
   </script>
 </body>
