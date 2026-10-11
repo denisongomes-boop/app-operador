@@ -3,8 +3,14 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>App Operador - ETA Pirapama</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d8a72">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Operador ETA">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1220,10 +1226,66 @@
       }
     }
 
+    let _deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      _deferredPrompt = e;
+      if (!sessionStorage.getItem('pwa-dismissed')) {
+        document.getElementById('pwa-install-banner').style.display = 'flex';
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('pwa-install-banner').style.display = 'none';
+      _deferredPrompt = null;
+    });
+
+    async function instalarPWA() {
+      if (_deferredPrompt) {
+        _deferredPrompt.prompt();
+        await _deferredPrompt.userChoice;
+        _deferredPrompt = null;
+        document.getElementById('pwa-install-banner').style.display = 'none';
+      } else {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        if (isIOS) {
+          alert('Para instalar no iPhone/iPad:\n\n1. Toque no botão compartilhar (quadrado com seta para cima)\n2. Toque em "Adicionar à Tela de Início"');
+        } else {
+          alert('Para instalar:\n\nAbra o menu do navegador (⋮) e toque em "Instalar aplicativo" ou "Adicionar à tela inicial".');
+        }
+      }
+    }
+
+    function fecharBannerPWA() {
+      document.getElementById('pwa-install-banner').style.display = 'none';
+      sessionStorage.setItem('pwa-dismissed', '1');
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-      // Init
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+      }
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+      if (!isStandalone) {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        if (isIOS && !sessionStorage.getItem('pwa-dismissed')) {
+          setTimeout(() => { document.getElementById('pwa-install-banner').style.display = 'flex'; }, 3000);
+        }
+      }
     });
   </script>
+
+  <!-- BANNER INSTALAÇÃO PWA -->
+  <div id="pwa-install-banner" style="display:none; position:fixed; bottom:75px; left:12px; right:12px; background:linear-gradient(135deg,#0d8a72,#065345); color:#fff; padding:14px 16px; border-radius:14px; z-index:1050; box-shadow:0 8px 24px rgba(0,0,0,0.25); align-items:center; gap:12px;">
+    <img src="icons/icon-192.png" alt="App" style="width:42px;height:42px;border-radius:10px;">
+    <div style="flex:1;">
+      <div style="font-weight:700;font-size:0.92rem;">Instalar App Operador</div>
+      <div style="font-size:0.75rem;opacity:0.85;">Acesso rápido direto na tela inicial</div>
+    </div>
+    <button onclick="instalarPWA()" style="background:#fff;color:#0d8a72;border:none;border-radius:8px;padding:8px 14px;font-weight:700;font-size:0.8rem;cursor:pointer;">Instalar</button>
+    <button onclick="fecharBannerPWA()" style="background:none;border:none;color:rgba(255,255,255,0.7);font-size:1.3rem;cursor:pointer;padding:0 2px;">✕</button>
+  </div>
 </body>
 
 </html>
