@@ -1,10 +1,8 @@
-const CACHE_NAME = 'eta-operador-v2.0';
+const CACHE_NAME = 'eta-operador-v1.0';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
@@ -12,34 +10,30 @@ const ASSETS = [
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS);
+    })
   );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (e) => {
   e.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    })
   );
   self.clients.claim();
 });
 
 self.addEventListener('fetch', (e) => {
-  if (e.request.url.includes('supabase.co')) {
-    e.respondWith(fetch(e.request));
-    return;
-  }
   e.respondWith(
-    fetch(e.request)
-      .then((res) => {
-        if (res.ok) {
-          const clone = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
-        }
-        return res;
-      })
-      .catch(() => caches.match(e.request))
+    fetch(e.request).catch(() => caches.match(e.request))
   );
 });
