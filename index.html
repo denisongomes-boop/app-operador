@@ -676,6 +676,10 @@
       </div>
       <form id="form-cadastro" onsubmit="fazerCadastro(event)">
         <div class="mb-3">
+          <label class="form-label">Nome Completo</label>
+          <input type="text" id="cadastro-nome" class="form-control" placeholder="Ex: João da Silva" required>
+        </div>
+        <div class="mb-3">
           <label class="form-label">E-mail</label>
           <input type="email" id="cadastro-email" class="form-control" placeholder="seu.email@exemplo.com" required>
         </div>
@@ -700,9 +704,10 @@
 
   <!-- APP PRINCIPAL (escondido até login) -->
   <div id="app-principal" style="display:none;">
-  <div class="header" style="display:flex;align-items:center;justify-content:center;gap:8px;position:relative;">
-    <span>👷‍♂️ App Operador - ETA Pirapama</span>
-    <button onclick="fazerLogout()" style="position:absolute;right:12px;background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:6px;padding:4px 10px;font-size:0.72rem;font-weight:600;cursor:pointer;">Sair</button>
+  <div class="header" style="display:flex;align-items:center;justify-content:space-between;position:relative;padding:10px 15px;">
+    <span style="font-size:0.75rem;font-weight:600;opacity:0.9;" id="header-user-name"></span>
+    <span style="font-weight:700;font-size:1.05rem;">👷‍♂️ App Operador</span>
+    <button onclick="fazerLogout()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:6px;padding:4px 10px;font-size:0.72rem;font-weight:600;cursor:pointer;">Sair</button>
   </div>
 
   <!-- TELA INÍCIO -->
@@ -1370,10 +1375,20 @@
       document.getElementById('cadastro-sucesso').style.display = 'none';
     }
 
-    function mostrarApp() {
+    async function mostrarApp() {
       document.getElementById('tela-login').classList.remove('active-auth');
       document.getElementById('tela-cadastro').classList.remove('active-auth');
       document.getElementById('app-principal').style.display = 'block';
+      const { data: { user } } = await _supabase.auth.getUser();
+      if (user) {
+        let nome = user.user_metadata?.nome || '';
+        if (!nome) {
+          const { data } = await _supabase.from('usuarios_operador').select('nome').eq('uid', user.id).maybeSingle();
+          nome = data?.nome || '';
+        }
+        const el = document.getElementById('header-user-name');
+        if (el) el.textContent = nome ? `Olá, ${nome}` : '';
+      }
     }
 
     function esconderApp() {
@@ -1412,6 +1427,7 @@
 
     async function fazerCadastro(e) {
       e.preventDefault();
+      const nome = document.getElementById('cadastro-nome').value.trim();
       const email = document.getElementById('cadastro-email').value.trim();
       const senha = document.getElementById('cadastro-senha').value;
       const senha2 = document.getElementById('cadastro-senha2').value;
@@ -1442,14 +1458,14 @@
           return;
         }
 
-        const { data, error } = await _supabase.auth.signUp({ email, password: senha });
+        const { data, error } = await _supabase.auth.signUp({ email, password: senha, options: { data: { nome: nome } } });
         if (error) {
           let msg = error.message;
           if (msg.includes('already registered')) msg = 'Este e-mail já está cadastrado.';
           erroDiv.textContent = msg;
           erroDiv.style.display = 'block';
         } else {
-          await _supabase.from('usuarios_operador').insert({ uid: data.user.id, email: email, criado_em: new Date().toISOString() });
+          await _supabase.from('usuarios_operador').insert({ uid: data.user.id, nome: nome, email: email, criado_em: new Date().toISOString() });
 
           if (data.session) {
             sucessoDiv.textContent = 'Conta criada! Entrando...';
