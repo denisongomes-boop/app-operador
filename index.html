@@ -571,11 +571,139 @@
       align-items: center;
       gap: 6px;
     }
+
+    /* TELA DE LOGIN / CADASTRO */
+    .auth-screen {
+      display: none;
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0d8a72 0%, #065345 50%, #032b23 100%);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .auth-screen.active-auth { display: flex; }
+    .auth-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 32px 24px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    .auth-logo { text-align: center; margin-bottom: 20px; }
+    .auth-logo img { width: 64px; height: 64px; border-radius: 14px; }
+    .auth-logo h5 { font-weight: 800; color: #0d8a72; margin: 10px 0 4px; font-size: 1.15rem; }
+    .auth-logo p { color: #64748b; font-size: 0.82rem; margin: 0; }
+    .auth-card .form-label { font-weight: 600; font-size: 0.85rem; color: #334155; }
+    .auth-card .form-control { border-radius: 10px; padding: 10px 14px; border: 1.5px solid #e2e8f0; font-size: 0.9rem; }
+    .auth-card .form-control:focus { border-color: #0d8a72; box-shadow: 0 0 0 3px rgba(13,138,114,0.15); }
+    .auth-btn {
+      background: linear-gradient(135deg, #0d8a72, #065345);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      width: 100%;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .auth-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .auth-link { color: #0d8a72; font-weight: 600; cursor: pointer; text-decoration: underline; background: none; border: none; font-size: 0.85rem; }
+    .auth-divider { text-align: center; color: #94a3b8; font-size: 0.82rem; margin: 16px 0; }
+    .auth-user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      color: #15803d;
+      font-weight: 600;
+    }
+    .btn-logout {
+      background: none;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      color: #64748b;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      cursor: pointer;
+      margin-left: auto;
+    }
   </style>
 </head>
 
 <body>
-  <div class="header">👷‍♂️ App Operador - ETA Pirapama</div>
+
+  <!-- TELA DE LOGIN -->
+  <div id="tela-login" class="auth-screen active-auth">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="icons/icon-192.png" alt="App Operador">
+        <h5>App Operador</h5>
+        <p>ETA Pirapama - COMPESA</p>
+      </div>
+      <form id="form-login" onsubmit="fazerLogin(event)">
+        <div class="mb-3">
+          <label class="form-label">E-mail</label>
+          <input type="email" id="login-email" class="form-control" placeholder="seu.email@exemplo.com" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Senha</label>
+          <input type="password" id="login-senha" class="form-control" placeholder="Digite sua senha" required minlength="6">
+        </div>
+        <div id="login-erro" class="text-danger small mb-2" style="display:none;"></div>
+        <button type="submit" class="auth-btn" id="login-btn">Entrar</button>
+      </form>
+      <div class="auth-divider">Ainda não tem conta?</div>
+      <div class="text-center">
+        <button class="auth-link" onclick="mostrarCadastro()">Criar conta de operador</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TELA DE CADASTRO -->
+  <div id="tela-cadastro" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="icons/icon-192.png" alt="App Operador">
+        <h5>Criar Conta</h5>
+        <p>Máximo de 30 operadores</p>
+      </div>
+      <form id="form-cadastro" onsubmit="fazerCadastro(event)">
+        <div class="mb-3">
+          <label class="form-label">E-mail</label>
+          <input type="email" id="cadastro-email" class="form-control" placeholder="seu.email@exemplo.com" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Senha</label>
+          <input type="password" id="cadastro-senha" class="form-control" placeholder="Mínimo 6 caracteres" required minlength="6">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Confirmar Senha</label>
+          <input type="password" id="cadastro-senha2" class="form-control" placeholder="Repita a senha" required minlength="6">
+        </div>
+        <div id="cadastro-erro" class="text-danger small mb-2" style="display:none;"></div>
+        <div id="cadastro-sucesso" class="text-success small mb-2" style="display:none;"></div>
+        <button type="submit" class="auth-btn" id="cadastro-btn">Criar Conta</button>
+      </form>
+      <div class="auth-divider">Já tem conta?</div>
+      <div class="text-center">
+        <button class="auth-link" onclick="mostrarLogin()">Voltar para o login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP PRINCIPAL (escondido até login) -->
+  <div id="app-principal" style="display:none;">
+  <div class="header" style="display:flex;align-items:center;justify-content:center;gap:8px;position:relative;">
+    <span>👷‍♂️ App Operador - ETA Pirapama</span>
+    <button onclick="fazerLogout()" style="position:absolute;right:12px;background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:6px;padding:4px 10px;font-size:0.72rem;font-weight:600;cursor:pointer;">Sair</button>
+  </div>
 
   <!-- TELA INÍCIO -->
   <div id="tela-inicio" class="screen active-screen">
@@ -1226,6 +1354,134 @@
       }
     }
 
+    // === AUTENTICAÇÃO ===
+    const MAX_USUARIOS = 30;
+
+    function mostrarLogin() {
+      document.getElementById('tela-login').classList.add('active-auth');
+      document.getElementById('tela-cadastro').classList.remove('active-auth');
+      document.getElementById('login-erro').style.display = 'none';
+    }
+
+    function mostrarCadastro() {
+      document.getElementById('tela-cadastro').classList.add('active-auth');
+      document.getElementById('tela-login').classList.remove('active-auth');
+      document.getElementById('cadastro-erro').style.display = 'none';
+      document.getElementById('cadastro-sucesso').style.display = 'none';
+    }
+
+    function mostrarApp() {
+      document.getElementById('tela-login').classList.remove('active-auth');
+      document.getElementById('tela-cadastro').classList.remove('active-auth');
+      document.getElementById('app-principal').style.display = 'block';
+    }
+
+    function esconderApp() {
+      document.getElementById('app-principal').style.display = 'none';
+      mostrarLogin();
+    }
+
+    async function fazerLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const senha = document.getElementById('login-senha').value;
+      const erroDiv = document.getElementById('login-erro');
+      const btn = document.getElementById('login-btn');
+      erroDiv.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Entrando...';
+      try {
+        const { error } = await _supabase.auth.signInWithPassword({ email, password: senha });
+        if (error) {
+          let msg = 'E-mail ou senha incorretos.';
+          if (error.message.includes('Invalid login')) msg = 'E-mail ou senha incorretos.';
+          else if (error.message.includes('Email not confirmed')) msg = 'Confirme seu e-mail antes de entrar. Verifique sua caixa de entrada.';
+          else msg = error.message;
+          erroDiv.textContent = msg;
+          erroDiv.style.display = 'block';
+        } else {
+          mostrarApp();
+        }
+      } catch (err) {
+        erroDiv.textContent = 'Erro de conexão. Tente novamente.';
+        erroDiv.style.display = 'block';
+      }
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+    }
+
+    async function fazerCadastro(e) {
+      e.preventDefault();
+      const email = document.getElementById('cadastro-email').value.trim();
+      const senha = document.getElementById('cadastro-senha').value;
+      const senha2 = document.getElementById('cadastro-senha2').value;
+      const erroDiv = document.getElementById('cadastro-erro');
+      const sucessoDiv = document.getElementById('cadastro-sucesso');
+      const btn = document.getElementById('cadastro-btn');
+      erroDiv.style.display = 'none';
+      sucessoDiv.style.display = 'none';
+
+      if (senha !== senha2) {
+        erroDiv.textContent = 'As senhas não conferem.';
+        erroDiv.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Criando conta...';
+      try {
+        const { data: countData } = await _supabase.from('usuarios_operador').select('id', { count: 'exact', head: true });
+        const totalUsuarios = countData ? countData.length : 0;
+
+        const { count } = await _supabase.from('usuarios_operador').select('*', { count: 'exact', head: true });
+        if (count !== null && count >= MAX_USUARIOS) {
+          erroDiv.textContent = `Limite de ${MAX_USUARIOS} operadores atingido. Contate o administrador.`;
+          erroDiv.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Criar Conta';
+          return;
+        }
+
+        const { data, error } = await _supabase.auth.signUp({ email, password: senha });
+        if (error) {
+          let msg = error.message;
+          if (msg.includes('already registered')) msg = 'Este e-mail já está cadastrado.';
+          erroDiv.textContent = msg;
+          erroDiv.style.display = 'block';
+        } else {
+          await _supabase.from('usuarios_operador').insert({ uid: data.user.id, email: email, criado_em: new Date().toISOString() });
+
+          if (data.session) {
+            sucessoDiv.textContent = 'Conta criada! Entrando...';
+            sucessoDiv.style.display = 'block';
+            setTimeout(() => mostrarApp(), 1000);
+          } else {
+            sucessoDiv.textContent = 'Conta criada! Verifique seu e-mail para confirmar e depois faça login.';
+            sucessoDiv.style.display = 'block';
+          }
+        }
+      } catch (err) {
+        erroDiv.textContent = 'Erro de conexão. Tente novamente.';
+        erroDiv.style.display = 'block';
+      }
+      btn.disabled = false;
+      btn.textContent = 'Criar Conta';
+    }
+
+    async function fazerLogout() {
+      await _supabase.auth.signOut();
+      esconderApp();
+    }
+
+    async function verificarSessao() {
+      const { data: { session } } = await _supabase.auth.getSession();
+      if (session) {
+        mostrarApp();
+      }
+    }
+
+    verificarSessao();
+
     let _deferredPrompt = null;
 
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -1275,6 +1531,8 @@
       }
     });
   </script>
+
+  </div><!-- fim app-principal -->
 
   <!-- BANNER INSTALAÇÃO PWA -->
   <div id="pwa-install-banner" style="display:none; position:fixed; bottom:75px; left:12px; right:12px; background:linear-gradient(135deg,#0d8a72,#065345); color:#fff; padding:14px 16px; border-radius:14px; z-index:1050; box-shadow:0 8px 24px rgba(0,0,0,0.25); align-items:center; gap:12px;">
