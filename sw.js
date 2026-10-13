@@ -1,7 +1,8 @@
-const CACHE_NAME = 'eta-operador-v3.0';
+const CACHE_NAME = 'eta-operador-v3.1';
 const ASSETS = [
   './',
   './index.html',
+  './js/guia-tutorial.js?v=1',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
