@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>App Operador - ETA Pirapama</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>CSM SUL - ATUADORES ELÉTRICOS</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0d8a72">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -31,31 +31,107 @@
       --btn-blue: #0b5ed7;
     }
 
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
     body {
       background-color: var(--bg-color);
       min-height: 100vh;
-      padding-bottom: 85px;
+      min-height: 100dvh;
+      padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px));
       font-family: 'Inter', sans-serif;
       color: var(--text-main);
       margin: 0;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Evita o zoom automático do iOS ao focar campos de formulário */
+    @media (max-width: 767px) {
+
+      input,
+      select,
+      textarea {
+        font-size: 16px !important;
+      }
     }
 
     /* HEADER SUPERIOR */
     .header {
       background-color: var(--header-bg);
       color: #ffffff;
-      padding: 12px 15px;
-      text-align: center;
+      padding: calc(10px + env(safe-area-inset-top, 0px)) calc(15px + env(safe-area-inset-right, 0px)) 10px calc(15px + env(safe-area-inset-left, 0px));
       font-weight: 700;
       font-size: 1.05rem;
       position: sticky;
       top: 0;
       z-index: 1020;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-user {
+      font-size: 0.75rem;
+      font-weight: 600;
+      opacity: 0.9;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-title {
+      font-weight: 700;
+      font-size: clamp(0.8rem, 3.5vw, 1.05rem);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-sair {
+      justify-self: end;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: #fff;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    @media (max-width: 575px) {
+      .header {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas: "titulo sair" "usuario sair";
+        row-gap: 0;
+      }
+
+      .header-title {
+        grid-area: titulo;
+        text-align: left;
+      }
+
+      .header-user {
+        grid-area: usuario;
+        font-size: 0.7rem;
+      }
+
+      .header-sair {
+        grid-area: sair;
+      }
     }
 
     .screen {
       display: none;
-      padding: 15px;
+      padding: 15px calc(15px + env(safe-area-inset-right, 0px)) 15px calc(15px + env(safe-area-inset-left, 0px));
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     .active-screen {
@@ -73,8 +149,8 @@
       background: linear-gradient(135deg, #0d8a72 0%, #065345 100%);
       color: #ffffff;
       border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 20px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
       box-shadow: 0 10px 25px -5px rgba(13, 138, 114, 0.25);
       position: relative;
       overflow: hidden;
@@ -83,9 +159,9 @@
     .inicio-hero-card::after {
       content: '⚙️';
       position: absolute;
-      right: -10px;
-      bottom: -15px;
-      font-size: 6.5rem;
+      right: -8px;
+      bottom: -12px;
+      font-size: 4.5rem;
       opacity: 0.12;
       pointer-events: none;
       transform: rotate(15deg);
@@ -96,14 +172,15 @@
       align-items: center;
       gap: 8px;
       background: rgba(255, 255, 255, 0.18);
+      -webkit-backdrop-filter: blur(4px);
       backdrop-filter: blur(4px);
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 20px;
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.4px;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       border: 1px solid rgba(255, 255, 255, 0.22);
     }
 
@@ -131,49 +208,60 @@
     }
 
     .inicio-hero-title {
-      font-size: 1.45rem;
+      font-size: clamp(1rem, 4.2vw, 1.2rem);
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
       line-height: 1.25;
-    }
-
-    .inicio-hero-subtitle {
-      font-size: 0.88rem;
-      color: rgba(255, 255, 255, 0.88);
-      margin-bottom: 16px;
-      max-width: 580px;
-      line-height: 1.45;
     }
 
     .inicio-stats-strip {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 6px;
     }
 
     .inicio-stat-pill {
       background: rgba(255, 255, 255, 0.14);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 5px 12px;
+      padding: 3px 9px;
       border-radius: 10px;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 600;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    /* GRID DE BOTÕES PROPORCIONAIS */
+    /* GRID DE ÍCONES CENTRAIS */
     .inicio-actions-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 575px) {
       .inicio-actions-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 12px;
+      }
+
+      .inicio-hero-card {
+        padding: 14px 16px;
+        margin-bottom: 12px;
+      }
+
+      .inicio-hero-title {
+        margin-bottom: 8px;
+      }
+
+      .inicio-stats-strip {
+        gap: 4px;
+      }
+
+      .inicio-stat-pill {
+        padding: 2px 7px;
+        font-size: 0.66rem;
+        gap: 4px;
       }
     }
 
@@ -181,22 +269,30 @@
       background: #ffffff;
       border: 1px solid #e2e8f0;
       border-radius: 16px;
-      padding: 20px 18px;
+      padding: 16px;
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 230px;
+      align-items: center;
+      justify-content: center;
+      min-height: clamp(120px, 34vw, 140px);
       cursor: pointer;
       text-decoration: none;
       transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
       user-select: none;
+      -webkit-user-select: none;
     }
 
-    .inicio-action-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 14px 24px -4px rgba(13, 138, 114, 0.14), 0 6px 12px -3px rgba(0, 0, 0, 0.04);
-      border-color: #cbd5e1;
+    @media (hover: hover) {
+      .inicio-action-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 24px -4px rgba(13, 138, 114, 0.14), 0 6px 12px -3px rgba(0, 0, 0, 0.04);
+        border-color: #cbd5e1;
+      }
+
+      .inicio-action-card:hover .inicio-card-icon-box {
+        transform: scale(1.08);
+      }
     }
 
     .inicio-action-card:active {
@@ -205,19 +301,14 @@
     }
 
     .inicio-card-icon-box {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
+      width: clamp(60px, 17vw, 80px);
+      height: clamp(60px, 17vw, 80px);
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
-      margin-bottom: 14px;
+      font-size: clamp(1.9rem, 5.5vw, 2.5rem);
       transition: transform 0.2s ease;
-    }
-
-    .inicio-action-card:hover .inicio-card-icon-box {
-      transform: scale(1.08);
     }
 
     .inicio-icon-manut {
@@ -233,73 +324,6 @@
     .inicio-icon-hist {
       background-color: #f0fdf4;
       border: 1px solid #bbf7d0;
-    }
-
-    .inicio-card-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 6px;
-    }
-
-    .inicio-card-desc {
-      font-size: 0.82rem;
-      color: #64748b;
-      line-height: 1.45;
-      margin-bottom: 16px;
-      flex-grow: 1;
-    }
-
-    .inicio-card-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding: 9px 14px;
-      border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      border: none;
-      transition: all 0.2s ease;
-    }
-
-    .inicio-btn-arrow {
-      font-size: 0.95rem;
-      transition: transform 0.2s ease;
-    }
-
-    .inicio-action-card:hover .inicio-btn-arrow {
-      transform: translateX(4px);
-    }
-
-    .inicio-btn-manut {
-      background-color: #fff1f2;
-      color: #be123c;
-    }
-
-    .inicio-action-card:hover .inicio-btn-manut {
-      background-color: #be123c;
-      color: #ffffff;
-    }
-
-    .inicio-btn-mapa {
-      background-color: #f0f9ff;
-      color: #0284c7;
-    }
-
-    .inicio-action-card:hover .inicio-btn-mapa {
-      background-color: #0284c7;
-      color: #ffffff;
-    }
-
-    .inicio-btn-hist {
-      background-color: #f0fdf4;
-      color: #15803d;
-    }
-
-    .inicio-action-card:hover .inicio-btn-hist {
-      background-color: #15803d;
-      color: #ffffff;
     }
 
     .inicio-info-box {
@@ -393,6 +417,7 @@
       font-weight: 800;
       font-size: 0.78rem;
       padding: 10px 2px;
+      min-height: 44px;
       text-align: center;
       cursor: pointer;
       width: 100%;
@@ -424,12 +449,13 @@
       right: 0;
       bottom: 0;
       background: rgba(15, 23, 42, 0.5);
+      -webkit-backdrop-filter: blur(2px);
       backdrop-filter: blur(2px);
       z-index: 10500;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px;
     }
 
     .modal-box-detalhes {
@@ -437,8 +463,11 @@
       border-radius: 14px;
       width: 100%;
       max-width: 400px;
+      max-height: 100%;
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .modal-header-azul {
@@ -533,9 +562,9 @@
       background: #ffffff;
       display: flex;
       justify-content: space-around;
-      padding: 8px 0 10px 0;
+      padding: 8px env(safe-area-inset-right, 0px) calc(10px + env(safe-area-inset-bottom, 0px)) env(safe-area-inset-left, 0px);
       border-top: 1px solid #e2e8f0;
-      z-index: 1000;
+      z-index: 1040;
     }
 
     .nav-item {
@@ -546,8 +575,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       flex: 1;
+      min-width: 0;
+      min-height: 48px;
       font-weight: 600;
+      cursor: pointer;
     }
 
     .nav-item.active {
@@ -557,6 +590,60 @@
     .nav-icon {
       font-size: 1.2rem;
       margin-bottom: 2px;
+    }
+
+    /* MENU "MAIS OPÇÕES" DA BARRA INFERIOR */
+    .nav-menu-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.25);
+      z-index: 1030;
+    }
+
+    .nav-menu-sheet {
+      display: none;
+      position: fixed;
+      right: calc(8px + env(safe-area-inset-right, 0px));
+      bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+      min-width: 210px;
+      max-width: calc(100vw - 16px);
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 6px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18);
+      z-index: 1041;
+    }
+
+    .nav-menu-backdrop.aberto,
+    .nav-menu-sheet.aberto {
+      display: block;
+    }
+
+    .nav-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      min-height: 48px;
+      padding: 10px 14px;
+      border: none;
+      background: none;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #334155;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .nav-menu-item.active {
+      color: #0284c7;
+      background: #f0f9ff;
     }
 
     .btn-voltar {
@@ -576,10 +663,11 @@
     .auth-screen {
       display: none;
       min-height: 100vh;
+      min-height: 100dvh;
       background: linear-gradient(160deg, #0d8a72 0%, #065345 50%, #032b23 100%);
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: calc(20px + env(safe-area-inset-top, 0px)) 20px calc(20px + env(safe-area-inset-bottom, 0px)) 20px;
     }
     .auth-screen.active-auth { display: flex; }
     .auth-card {
@@ -643,8 +731,8 @@
   <div id="tela-login" class="auth-screen active-auth">
     <div class="auth-card">
       <div class="auth-logo">
-        <img src="icons/icon-192.png" alt="App Operador">
-        <h5>App Operador</h5>
+        <img src="icons/icon-192.png" alt="CSM SUL - ATUADORES ELÉTRICOS">
+        <h5>CSM SUL - ATUADORES ELÉTRICOS</h5>
         <p>ETA Pirapama - COMPESA</p>
       </div>
       <form id="form-login" onsubmit="fazerLogin(event)">
@@ -670,7 +758,7 @@
   <div id="tela-cadastro" class="auth-screen">
     <div class="auth-card">
       <div class="auth-logo">
-        <img src="icons/icon-192.png" alt="App Operador">
+        <img src="icons/icon-192.png" alt="CSM SUL - ATUADORES ELÉTRICOS">
         <h5>Criar Conta</h5>
         <p>Máximo de 30 operadores</p>
       </div>
@@ -704,10 +792,10 @@
 
   <!-- APP PRINCIPAL (escondido até login) -->
   <div id="app-principal" style="display:none;">
-  <div class="header" style="display:flex;align-items:center;justify-content:space-between;position:relative;padding:10px 15px;">
-    <span style="font-size:0.75rem;font-weight:600;opacity:0.9;" id="header-user-name"></span>
-    <span style="font-weight:700;font-size:1.05rem;">👷‍♂️ App Operador</span>
-    <button onclick="fazerLogout()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:6px;padding:4px 10px;font-size:0.72rem;font-weight:600;cursor:pointer;">Sair</button>
+  <div class="header">
+    <span class="header-user" id="header-user-name"></span>
+    <span class="header-title">CSM SUL - ATUADORES ELÉTRICOS</span>
+    <button class="header-sair" onclick="fazerLogout()">Sair</button>
   </div>
 
   <!-- TELA INÍCIO -->
@@ -719,10 +807,6 @@
           <span>Sistema Ativo • ETA Pirapama</span>
         </div>
         <h1 class="inicio-hero-title">Operação de Atuadores</h1>
-        <p class="inicio-hero-subtitle">
-          Painel central do operador para monitoramento de válvulas, acompanhamento dos 16 filtros e abertura rápida de
-          chamados.
-        </p>
         <div class="inicio-stats-strip">
           <div class="inicio-stat-pill"><span>🏭</span><span>ETA Pirapama</span></div>
           <div class="inicio-stat-pill"><span>⚡</span><span>16 Filtros (Alas E/D)</span></div>
@@ -731,68 +815,22 @@
       </div>
 
       <div class="inicio-actions-grid">
-        <div class="inicio-action-card"
+        <button type="button" class="inicio-action-card" title="Solicitar Manutenção" aria-label="Solicitar Manutenção"
           onclick="mudar('tela-manutencao', document.getElementById('btn-nav-tela-manutencao'))">
-          <div>
-            <div class="inicio-card-icon-box inicio-icon-manut">🛠️</div>
-            <div class="inicio-card-title">Solicitar Manutenção</div>
-            <div class="inicio-card-desc">Abertura de chamados técnicos, registro de falhas e exportação rápida para o
-              WhatsApp.</div>
-          </div>
-          <div class="inicio-card-btn inicio-btn-manut">
-            <span>Abrir Chamado</span><span class="inicio-btn-arrow">➔</span>
-          </div>
-        </div>
-        <div class="inicio-action-card" onclick="mudar('tela-mapa', document.getElementById('btn-nav-tela-mapa'))">
-          <div>
-            <div class="inicio-card-icon-box inicio-icon-mapa">🗺️</div>
-            <div class="inicio-card-title">Mapa da Planta</div>
-            <div class="inicio-card-desc">Visualização sinóptica dos filtros com status operacional em tempo real de
-              cada atuador.</div>
-          </div>
-          <div class="inicio-card-btn inicio-btn-mapa">
-            <span>Acessar Mapa</span><span class="inicio-btn-arrow">➔</span>
-          </div>
-        </div>
-        <div class="inicio-action-card"
+          <span class="inicio-card-icon-box inicio-icon-manut">🛠️</span>
+        </button>
+        <button type="button" class="inicio-action-card" title="Mapa da Planta" aria-label="Mapa da Planta"
+          onclick="mudar('tela-mapa', document.getElementById('btn-nav-tela-mapa'))">
+          <span class="inicio-card-icon-box inicio-icon-mapa">🗺️</span>
+        </button>
+        <button type="button" class="inicio-action-card" title="Histórico de OS" aria-label="Histórico de OS"
           onclick="mudar('tela-historico-os', document.getElementById('btn-nav-tela-historico'))">
-          <div>
-            <div class="inicio-card-icon-box inicio-icon-hist">📜</div>
-            <div class="inicio-card-title">Histórico de OS</div>
-            <div class="inicio-card-desc">Consulta detalhada de ordens de serviço executadas, equipes, filtros e
-              manutenções.</div>
-          </div>
-          <div class="inicio-card-btn inicio-btn-hist">
-            <span>Ver Histórico</span><span class="inicio-btn-arrow">➔</span>
-          </div>
-        </div>
-        <div class="inicio-action-card" onclick="mudar('tela-pendencias', document.getElementById('btn-nav-tela-pendencias'))">
-          <div>
-            <div class="inicio-card-icon-box" style="background: linear-gradient(135deg,#dc3545,#c82333);">⚠️</div>
-            <div class="inicio-card-title">Pendências</div>
-            <div class="inicio-card-desc">Acompanhe as pendências técnicas abertas pela equipe de manutenção nos atuadores.</div>
-          </div>
-          <div class="inicio-card-btn" style="background: linear-gradient(90deg,#dc3545,#c82333); color:#fff;">
-            <span>Ver Pendências</span><span class="inicio-btn-arrow">➔</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="inicio-info-box mt-3">
-        <div class="d-flex align-items-center gap-2 mb-2">
-          <span style="font-size: 1.1rem;">ℹ️</span>
-          <strong style="font-size: 0.88rem; color: #334155;">Estrutura da Galeria de Filtros</strong>
-        </div>
-        <div class="row g-2 text-muted" style="font-size: 0.8rem;">
-          <div class="col-12 col-md-6">
-            <div class="p-2 rounded bg-light border"><strong class="text-dark">Ala Esquerda:</strong> Filtros 01 ao 08
-              (Entrada, Descarga, Soprador, Lavagem, Filtrada)</div>
-          </div>
-          <div class="col-12 col-md-6">
-            <div class="p-2 rounded bg-light border"><strong class="text-dark">Ala Direita:</strong> Filtros 09 ao 16
-              (Entrada, Descarga, Soprador, Lavagem, Filtrada)</div>
-          </div>
-        </div>
+          <span class="inicio-card-icon-box inicio-icon-hist">📜</span>
+        </button>
+        <button type="button" class="inicio-action-card" title="Pendências" aria-label="Pendências"
+          onclick="mudar('tela-pendencias', document.getElementById('btn-nav-tela-pendencias'))">
+          <span class="inicio-card-icon-box" style="background: linear-gradient(135deg,#dc3545,#c82333);">⚠️</span>
+        </button>
       </div>
     </div>
   </div>
@@ -889,6 +927,23 @@
       <div class="col-12 col-md-6">
         <div class="mapa-ala-title">ALA DIREITA (9 ao 16)</div>
         <div id="mapa-ala-direita" class="d-flex flex-column gap-2"></div>
+      </div>
+    </div>
+
+    <div class="inicio-info-box mt-3">
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <span style="font-size: 1.1rem;">ℹ️</span>
+        <strong style="font-size: 0.88rem; color: #334155;">Estrutura da Galeria de Filtros</strong>
+      </div>
+      <div class="row g-2 text-muted" style="font-size: 0.8rem;">
+        <div class="col-12 col-md-6">
+          <div class="p-2 rounded bg-light border"><strong class="text-dark">Ala Esquerda:</strong> Filtros 01 ao 08
+            (Entrada, Descarga, Soprador, Lavagem, Filtrada)</div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="p-2 rounded bg-light border"><strong class="text-dark">Ala Direita:</strong> Filtros 09 ao 16
+            (Entrada, Descarga, Soprador, Lavagem, Filtrada)</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1008,9 +1063,16 @@
         class="nav-icon">🛠️</span>Manutenção</button>
     <button class="nav-item" id="btn-nav-tela-mapa" onclick="mudar('tela-mapa', this)"><span
         class="nav-icon">🗺️</span>Mapa</button>
-    <button class="nav-item" id="btn-nav-tela-pendencias" onclick="mudar('tela-pendencias', this)"><span
+    <button class="nav-item" id="btn-nav-menu" aria-haspopup="true" aria-expanded="false"
+      onclick="alternarMenuNav()"><span class="nav-icon">☰</span>Menu</button>
+  </div>
+
+  <!-- MENU COM AS DEMAIS OPÇÕES -->
+  <div class="nav-menu-backdrop" id="nav-menu-backdrop" onclick="fecharMenuNav()"></div>
+  <div class="nav-menu-sheet" id="nav-menu-sheet">
+    <button class="nav-menu-item" id="btn-nav-tela-pendencias" onclick="mudar('tela-pendencias', this)"><span
         class="nav-icon">⚠️</span>Pendências</button>
-    <button class="nav-item" id="btn-nav-tela-historico" onclick="mudar('tela-historico-os', this)"><span
+    <button class="nav-menu-item" id="btn-nav-tela-historico" onclick="mudar('tela-historico-os', this)"><span
         class="nav-icon">📜</span>Histórico</button>
   </div>
 
@@ -1054,14 +1116,28 @@
 
     function mudar(id, btn) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
-      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.nav-item, .nav-menu-item').forEach(b => b.classList.remove('active'));
       const target = document.getElementById(id);
       if (target) target.classList.add('active-screen');
       if (btn) btn.classList.add('active');
+      if (btn && btn.classList.contains('nav-menu-item')) document.getElementById('btn-nav-menu').classList.add('active');
+      fecharMenuNav();
       if (id === 'tela-mapa') { carregarMapaApp(); iniciarPollingMapa(); } else { pararPollingMapa(); }
       if (id === 'tela-historico-os') inicializarHistoricoOS();
       if (id === 'tela-pendencias') carregarPendenciasOperador();
       window.scrollTo(0, 0);
+    }
+
+    function alternarMenuNav() {
+      const aberto = document.getElementById('nav-menu-sheet').classList.toggle('aberto');
+      document.getElementById('nav-menu-backdrop').classList.toggle('aberto', aberto);
+      document.getElementById('btn-nav-menu').setAttribute('aria-expanded', aberto);
+    }
+
+    function fecharMenuNav() {
+      document.getElementById('nav-menu-sheet').classList.remove('aberto');
+      document.getElementById('nav-menu-backdrop').classList.remove('aberto');
+      document.getElementById('btn-nav-menu').setAttribute('aria-expanded', 'false');
     }
 
     function voltarInicio() { mudar('tela-inicio', document.getElementById('btn-nav-tela-inicio')); }
@@ -1551,10 +1627,10 @@
   </div><!-- fim app-principal -->
 
   <!-- BANNER INSTALAÇÃO PWA -->
-  <div id="pwa-install-banner" style="display:none; position:fixed; bottom:75px; left:12px; right:12px; background:linear-gradient(135deg,#0d8a72,#065345); color:#fff; padding:14px 16px; border-radius:14px; z-index:1050; box-shadow:0 8px 24px rgba(0,0,0,0.25); align-items:center; gap:12px;">
+  <div id="pwa-install-banner" style="display:none; position:fixed; bottom:calc(80px + env(safe-area-inset-bottom, 0px)); left:12px; right:12px; background:linear-gradient(135deg,#0d8a72,#065345); color:#fff; padding:14px 16px; border-radius:14px; z-index:1050; box-shadow:0 8px 24px rgba(0,0,0,0.25); align-items:center; gap:12px;">
     <img src="icons/icon-192.png" alt="App" style="width:42px;height:42px;border-radius:10px;">
     <div style="flex:1;">
-      <div style="font-weight:700;font-size:0.92rem;">Instalar App Operador</div>
+      <div style="font-weight:700;font-size:0.92rem;">Instalar CSM SUL - ATUADORES ELÉTRICOS</div>
       <div style="font-size:0.75rem;opacity:0.85;">Acesso rápido direto na tela inicial</div>
     </div>
     <button onclick="instalarPWA()" style="background:#fff;color:#0d8a72;border:none;border-radius:8px;padding:8px 14px;font-weight:700;font-size:0.8rem;cursor:pointer;">Instalar</button>
