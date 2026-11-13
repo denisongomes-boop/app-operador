@@ -148,6 +148,16 @@
             dica('Use os botões <strong>Próximo</strong> e <strong>Anterior</strong> para navegar. O <strong>X</strong> fecha o guia a qualquer momento.')
         },
         {
+          icone: '&#128273;',
+          titulo: 'Login',
+          html: lista([
+            'Digite seu <strong>E-mail</strong> e sua <strong>Senha</strong> e toque em <strong>Entrar</strong>.',
+            'O acesso é o mesmo usuário do sistema Gestão e Operação da ETA.',
+            'Para sair, toque em <strong>Sair</strong>, no canto inferior esquerdo, ao lado do seu nome.'
+          ]) +
+            info('Só gestores e administradores entram neste sistema. Operadores usam a Visão Operador ou o App Operador.')
+        },
+        {
           icone: '&#127968;',
           titulo: 'Tela Inicial',
           html: '<p>A tela inicial organiza o sistema em setores. Toque em um cartão para abrir os módulos:</p>' +
@@ -286,6 +296,16 @@
             dica('Use os botões <strong>Próximo</strong> e <strong>Anterior</strong> para navegar. O <strong>X</strong> fecha o guia a qualquer momento.')
         },
         {
+          icone: '&#128273;',
+          titulo: 'Login',
+          html: lista([
+            'Digite seu <strong>E-mail</strong> e sua <strong>Senha</strong> e toque em <strong>Entrar</strong>.',
+            'O acesso é o mesmo usuário do sistema Gestão e Operação da ETA.',
+            'Para sair, toque em <strong>Sair</strong>, no canto inferior esquerdo, ao lado do seu nome.'
+          ]) +
+            info('Qualquer usuário ativo entra aqui. Se o acesso foi desativado, fale com o administrador.')
+        },
+        {
           icone: '&#127968;',
           titulo: 'Tela Inicial',
           html: '<p>A tela inicial traz os atalhos principais:</p>' +
@@ -399,6 +419,7 @@
     '.gt-banner-texto span{font-size:.76rem;opacity:.9}',
     '.gt-banner-btn{flex:none;background:#fff;color:var(--gt-cor-escura);border:none;border-radius:9px;padding:9px 12px;font-size:.8rem;font-weight:800;cursor:pointer;min-height:40px;white-space:nowrap;font-family:inherit}',
     '.gt-banner-x{flex:none;background:none;border:none;color:rgba(255,255,255,.8);font-size:1.15rem;cursor:pointer;width:32px;height:40px;padding:0;line-height:1}',
+    '@media (max-width:400px){.gt-banner{left:8px;right:8px;padding:8px 8px 8px 16px;gap:8px}.gt-banner-texto span{display:none}}',
     '@keyframes gt-acenar{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(16deg)}20%,40%{transform:rotate(-10deg)}}',
     '@media (prefers-reduced-motion:reduce){.gt-banner-icone{animation:none}.gt-overlay,.gt-caixa,.gt-banner{transition:none}}'
   ].join('');
