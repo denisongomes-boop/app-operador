@@ -1,4 +1,4 @@
-const CACHE_NAME = 'eta-operador-v3.4';
+const CACHE_NAME = 'eta-operador-v3.5';
 const ASSETS = [
   './',
   './index.html',

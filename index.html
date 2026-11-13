@@ -28,9 +28,14 @@
       --text-muted: #64748b;
       --primary-blue: #0284c7;
       --border-color: #e2e8f0;
-      --btn-green: #236338;
-      --btn-red: #be202e;
-      --btn-blue: #0b5ed7;
+      /* Cores dos status: iguais nos três apps (Gestão e Operação, Gestão de Atuadores, App Operador) */
+      --st-ok: #1b5e20;
+      --st-parado: #b71c1c;
+      --st-removido: #0d47a1;
+      --st-indefinido: #6c757d;
+      --btn-green: var(--st-ok);
+      --btn-red: var(--st-parado);
+      --btn-blue: var(--st-removido);
     }
 
     html {
@@ -542,7 +547,7 @@
     }
 
     .badge-status-ok {
-      background-color: #198754;
+      background-color: var(--st-ok);
       color: #ffffff;
       font-size: 0.75rem;
       padding: 4px 8px;
@@ -551,7 +556,7 @@
     }
 
     .badge-status-falha {
-      background-color: #dc3545;
+      background-color: var(--st-parado);
       color: #ffffff;
       font-size: 0.75rem;
       padding: 4px 8px;

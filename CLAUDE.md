@@ -14,6 +14,7 @@ PWA do operador da ETA Pirapama para consultar o mapa dos atuadores (filtros, al
 
 ## Regras
 - Cada entrega sobe a versão do cache no `sw.js`.
+- Cores dos status (`--st-ok`, `--st-parado`, `--st-removido`, `--st-indefinido`) são as mesmas da Gestão e Operação e do Gestão de Atuadores: não mudar só aqui.
 - Nomes de campo compartilhados com a Gestão: não renomear coluna sem mudar os dois apps.
 
 ## Habilidades do Claude Code para este repo
