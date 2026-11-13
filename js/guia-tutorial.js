@@ -148,6 +148,16 @@
             dica('Use os botões <strong>Próximo</strong> e <strong>Anterior</strong> para navegar. O <strong>X</strong> fecha o guia a qualquer momento.')
         },
         {
+          icone: '&#128273;',
+          titulo: 'Login',
+          html: lista([
+            'Digite seu <strong>E-mail</strong> e sua <strong>Senha</strong> e toque em <strong>Entrar</strong>.',
+            'O acesso é o mesmo usuário do sistema Gestão e Operação da ETA.',
+            'Para sair, toque em <strong>Sair</strong>, no canto inferior esquerdo, ao lado do seu nome.'
+          ]) +
+            info('Só gestores e administradores entram neste sistema. Operadores usam a Visão Operador ou o App Operador.')
+        },
+        {
           icone: '&#127968;',
           titulo: 'Tela Inicial',
           html: '<p>A tela inicial organiza o sistema em setores. Toque em um cartão para abrir os módulos:</p>' +
@@ -284,6 +294,16 @@
           html: '<p>Esta é a <strong>Visão Operador</strong>, o módulo de consulta dos atuadores da ETA Pirapama.</p>' +
             '<p>Aqui você consulta equipamentos, acompanha pendências e pede manutenção.</p>' +
             dica('Use os botões <strong>Próximo</strong> e <strong>Anterior</strong> para navegar. O <strong>X</strong> fecha o guia a qualquer momento.')
+        },
+        {
+          icone: '&#128273;',
+          titulo: 'Login',
+          html: lista([
+            'Digite seu <strong>E-mail</strong> e sua <strong>Senha</strong> e toque em <strong>Entrar</strong>.',
+            'O acesso é o mesmo usuário do sistema Gestão e Operação da ETA.',
+            'Para sair, toque em <strong>Sair</strong>, no canto inferior esquerdo, ao lado do seu nome.'
+          ]) +
+            info('Qualquer usuário ativo entra aqui. Se o acesso foi desativado, fale com o administrador.')
         },
         {
           icone: '&#127968;',

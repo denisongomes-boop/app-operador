@@ -7,7 +7,7 @@ PWA do operador da ETA Pirapama para consultar o mapa dos atuadores (filtros, al
 - Vercel (projeto `app-operador`), sem build: cada push na `main` publica sozinho.
 
 ## Mapa
-- `index.html`: login e cadastro (Supabase Auth, limite de 30 operadores na tabela `usuarios_operador`), Mapa Visual (campo `status_atual`, atualiza a cada 30 s), Pendências (tabela `pendencia`), solicitação (`solicitacoes_operador`) com envio pelo WhatsApp, banner de instalação.
+- `index.html`: login e cadastro (Supabase Auth + tabela `perfis`, a mesma da Gestão; cadastro cria perfil `operador`; limite de 30 operadores ativos garantido por gatilho no banco), Mapa Visual (campo `status_atual`, atualiza a cada 30 s), Pendências (tabela `pendencia`), solicitação (`solicitacoes_operador`) com envio pelo WhatsApp, banner de instalação.
 - `js/guia-tutorial.js`: guia com banner de primeiro acesso.
 - `js/atualizacao.js`: versão nova entra sozinha quando o app vai para segundo plano (nunca mostrar aviso de atualização).
 - Barra inferior com 4 opções; Menu agrupa Pendências e Histórico.
